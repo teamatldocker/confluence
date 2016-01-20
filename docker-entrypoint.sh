@@ -14,6 +14,10 @@ if [ -n "${CONFLUENCE_PROXY_PORT}" ]; then
   xmlstarlet ed -P -S -L --insert "//Connector[not(@proxyPort)]" --type attr -n proxyPort --value "${CONFLUENCE_PROXY_PORT}" ${CONF_INSTALL}/conf/server.xml
 fi
 
+if [ -n "${CONFLUENCE_PROXY_SCHEME}" ]; then
+  xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n proxyPort --value "${CONFLUENCE_PROXY_SCHEME}" ${CONF_INSTALL}/conf/server.xml
+fi
+
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   TARGET_PROPERTY=1catalina.org.apache.juli.AsyncFileHandler.directory
   sed -i "/${TARGET_PROPERTY}/d" ${CONF_INSTALL}/conf/logging.properties

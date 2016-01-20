@@ -23,17 +23,21 @@ $ docker run -d --name confluence \
 
 You can specify your proxy host and proxy port with the environment variables CONFLUENCE_PROXY_NAME and CONFLUENCE_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
 
-Example:
+When you use https then you also have to include the environment variable CONFLUENCE_PROXY_SCHEME.
+
+Example HTTPS:
 
 * Proxy Name: myhost.example.com
-* Proxy Port: 80
+* Proxy Port: 443
+* Poxy Protocol Scheme: https
 
 Just type:
 
 ~~~~
 $ docker run -d --name confluence \
     -e "CONFLUENCE_PROXY_NAME=myhost.example.com" \
-    -e "CONFLUENCE_PROXY_PORT=80" \
+    -e "CONFLUENCE_PROXY_PORT=443" \
+    -e "CONFLUENCE_PROXY_SCHEME=https" \
     blacklabelops/confluence
 ~~~~
 

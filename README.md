@@ -16,7 +16,7 @@ $ docker run -d --name confluence \
     blacklabelops/confluence
 ~~~~
 
-> Will
+> Will write logs to /var/atlassian/confluence/logs. Note: Must be accessible by daemon:daemon user!
 
 
 # Proxy configuration

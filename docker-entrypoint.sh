@@ -15,7 +15,7 @@ if [ -n "${CONFLUENCE_PROXY_PORT}" ]; then
 fi
 
 if [ -n "${CONFLUENCE_PROXY_SCHEME}" ]; then
-  xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n proxyPort --value "${CONFLUENCE_PROXY_SCHEME}" ${CONF_INSTALL}/conf/server.xml
+  xmlstarlet ed -P -S -L --insert "//Connector[not(@scheme)]" --type attr -n scheme --value "${CONFLUENCE_PROXY_SCHEME}" ${CONF_INSTALL}/conf/server.xml
 fi
 
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then

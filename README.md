@@ -15,6 +15,53 @@
 $ docker run -d -p 80:8090 --name confluence blacklabelops/confluence
 ~~~~
 
+# Setup
+
+1. Start the database container
+2. Start Confluence
+3. Setup Confluence
+
+First start the database server:
+
+> Note: Change Password!
+
+~~~~
+$ docker run --name postgres -d \
+    -e 'POSTGRES_USER=jira' \
+    -e 'POSTGRES_PASSWORD=jellyfish' \
+    -e 'POSTGRES_ENCODING=UTF8' \
+    -e 'POSTGRES_COLLATE=C' \
+    -e 'POSTGRES_COLLATE_TYPE=C' \
+    blacklabelops/postgres
+~~~~
+
+> This is the blacklabelops postgres image.
+
+Secondly start Confluence with a link to postgres:
+
+~~~~
+$ docker run -d --name confluence \
+	  --link postgres:postgres \
+	  -p 80:8090 blacklabelops/confluence
+~~~~
+
+>  Start the Confluence and link it to the postgresql instance.
+
+Thirdly, configure your Confluence yourself and fill it with a test license.
+
+1. Choose `Production Installation` because we have a postgres!
+2. Enter license information
+3. In `Choose a Database Configuration` choose `PostgeSQL` and press `External Database`
+4. In `Configure Database` press `Direct JDBC`
+5. In `Configure Database` fill out the form:
+
+* Driver Class Name: `org.postgresql.Driver`
+* Database URL: `jdbc:postgresql://postgres:5432/confluencedb`
+* User Name: `confluencedb`
+* Password: `jellyfish`
+
+> Note: Change Password!
+
 # Demo Database Setup
 
 > Note: It's not recommended to use a default initialized database for Confluence in production! The default databases are all using a not recommended database configuration! Please use this for demo purposes only!

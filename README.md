@@ -1,8 +1,21 @@
 # Dockerized Atlassian Confluence
 
-Extensive documentation can be found here: https://github.com/cptactionhank/docker-atlassian-confluence
 
-This image enables the configuration of a proxy! Proxy configuration is required by Atlassian products when used behind a proxy.
+[![Circle CI](https://circleci.com/gh/blacklabelops/confluence/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/confluence/tree/master)
+
+## Supported tags and respective Dockerfile links
+
+| Product |Version | Tags  | Dockerfile |
+|---------|--------|-------|------------|
+| Confluence | 5.9.5 | 5.9.5, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
+
+# Make It Short
+
+~~~~
+$ docker run -d -p 80:8090 --name confluence blacklabelops/confluence
+~~~~
+
+> Confluence will be available at http://yourdockerhost
 
 # Log File Configuration
 
@@ -102,3 +115,105 @@ $ docker run -d \
 ~~~~
 
 > Confluence will be available at https://boot2docker-ip or https://localhost. Depends if you running Docker locally or if you use Dockertools.
+
+# Build The Image
+
+The build process can take the following argument:
+
+* CONFLUENCE_VERSION: The specific Confluence version number.
+
+Examples:
+
+Build image with the default Confluence release:
+
+~~~~
+$ docker build -t blacklabelops/confluence .
+~~~~
+
+> Note: Dockerfile must be inside the current directory!
+
+Build image with a specific Confluence release:
+
+~~~~
+$ docker build --build-arg CONFLUENCE_VERSION=5.9.5  -t blacklabelops/confluence .
+~~~~
+
+> Note: Dockerfile must be inside the current directory!
+
+# Using Docker Compose
+
+The build configuration are specified inside the following area:
+
+~~~~
+jenkins:
+  build:
+    context: .
+    dockerfile: Dockerfile
+    args:
+      CONFLUENCE_VERSION: 5.9.5
+~~~~
+
+> Adjust CONFLUENCE_VERSION for your personal needs.
+
+Build the latest release with docker-compose:
+
+~~~~
+$ docker-compose build
+~~~~
+
+# Container Permissions
+
+Simply: You can set user-id and group-id matching to a user and group from your host machine!
+
+Due to security considerations this image is not running in root mode! The Jenkins process user inside the container is `confluence` and the user's group is `confluence`. This project offers a simplified mechanism for user- and group-mapping. You can set the uid of the user and gid of the user's group during build time.
+
+The process permissions are relevant when using volumes and mounted folders from the host machine. NGINX need read and write permissions on the host machine. You can set UID and GID of the NGINX's process during build time! UID and GID should resemble credentials from your host machine.
+
+The following build arguments can be used:
+
+* CONTAINER_UID: Set the user-id of the process. (default: 1000)
+* CONTAINER_GID: Set the group-id of the process. (default: 1000)
+
+Example:
+
+~~~~
+$ docker build --build-arg CONTAINER_UID=2000 --build-arg CONTAINER_GID=2000 -t blacklabelops/confluence .
+~~~~
+
+> The container will write and read files with UID 2000 and GID 2000.
+
+# Vagrant
+
+First install:
+
+* [Vagrant](https://www.vagrantup.com/)
+* [Virtualbox](https://www.virtualbox.org/)
+
+Vagrant is fabulous tool for pulling and spinning up virtual machines like docker with containers. I can configure my development and test environment and simply pull it online. And so can you! Install Vagrant and Virtualbox and spin it up. Change into the project folder and build the project on the spot!
+
+~~~~
+$ vagrant up
+$ vagrant ssh
+[vagrant@localhost ~]$ cd /vagrant
+[vagrant@localhost ~]$ docker-compose up
+~~~~
+
+> Confluence will be available on localhost:8080 on the host machine.
+
+# Support & Feature Requests
+
+Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)
+
+# Credits
+
+This project is very grateful for code and examples from the repositories:
+
+* [atlassianlabs/atlassian-docker](https://bitbucket.org/atlassianlabs/atlassian-docker)
+* [cptactionhank/docker-atlassian-confluence](https://github.com/cptactionhank/docker-atlassian-confluence)
+
+## References
+* [Atlassian Confluence](https://www.atlassian.com/software/confluence)
+* [Docker Homepage](https://www.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
+* [Docker Userguide](https://docs.docker.com/userguide/)
+* [Oracle Java](https://java.com/de/download/)

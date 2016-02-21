@@ -6,6 +6,11 @@
 # If CMD argument is overriden and not 'confluence', then the user wants to run
 # his own process.
 
+if [ -n "${CONFLUENCE_DELAYED_START}" ]; then
+  sleep ${CONFLUENCE_DELAYED_START}
+fi
+
+
 if [ -n "${CONFLUENCE_PROXY_NAME}" ]; then
   xmlstarlet ed -P -S -L --insert "//Connector[not(@proxyName)]" --type attr -n proxyName --value "${CONFLUENCE_PROXY_NAME}" ${CONF_INSTALL}/conf/server.xml
 fi

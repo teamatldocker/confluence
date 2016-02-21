@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  confluence:
+    image: blacklabelops/confluence
+    container_name: confluence
+    networks:
+      - confluencenet
+    volumes:
+      - confluencedata:/var/atlassian/confluence
+    ports:
+      - '80:8090'
+    environment:
+      - 'CATALINA_OPTS= -Xms256m -Xmx1g'
+      - 'CONFLUENCE_PROXY_NAME='
+      - 'CONFLUENCE_PROXY_PORT='
+      - 'CONFLUENCE_PROXY_SCHEME='
+      - 'CONFLUENCE_DELAYED_START='
+    labels:
+      com.blacklabelops.description: "Atlassian Confluence"
+      com.blacklabelops.service: "confluence"
+
+volumes:
+  jconfluencedata:
+    external: false
+
+networks:
+  confluencenet:
+    driver: bridge

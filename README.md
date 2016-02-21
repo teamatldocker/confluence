@@ -1,4 +1,4 @@
-Docker Re-Wrapper of Confluence Docker Image: cptactionhank/atlassian-confluence
+# Dockerized Atlassian Confluence
 
 Extensive documentation can be found here: https://github.com/cptactionhank/docker-atlassian-confluence
 

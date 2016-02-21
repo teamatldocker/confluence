@@ -1,0 +1,16 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker version
+    - docker info
+    - docker build -t blacklabelops/confluence .
+
+test:
+  override:
+    - docker run -d -p 8100:8090 --name="confluence" blacklabelops/confluence
+    - sleep 30
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8100/
+    - docker stop confluence

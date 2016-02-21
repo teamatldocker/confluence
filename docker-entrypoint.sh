@@ -71,9 +71,6 @@ if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   relayConfluenceLogFiles
 fi
 
-# cat ${CONF_INSTALL}/conf/server.xml
-# cat ${CONF_INSTALL}/conf/logging.properties
-
 if [ "$1" = 'confluence' ]; then
   /opt/atlassian/confluence/bin/start-confluence.sh -fg
 fi

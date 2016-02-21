@@ -15,6 +15,118 @@
 $ docker run -d -p 80:8090 --name confluence blacklabelops/confluence
 ~~~~
 
+# Demo Database Setup
+
+> Note: It's not recommended to use a default initialized database for Confluence in production! The default databases are all using a not recommended database configuration! Please use this for demo purposes only!
+
+This is a demo "by foot" using the docker cli. In this example we setup an empty PostgreSQL container. Then we connect and configure the Confluence accordingly. Afterwards the Confluence container can always resume on the database.
+
+Steps:
+
+* Start Database container
+* Start Confluence
+
+## PostgreSQL
+
+Let's take an PostgreSQL Docker Image and set it up:
+
+Postgres Official Docker Image:
+
+~~~~
+$ docker run --name postgres -d \
+    -e 'POSTGRES_DB=confluencedb' \
+    -e 'POSTGRES_USER=confluencedb' \
+    -e 'POSTGRES_PASSWORD=jellyfish' \
+    postgres:9.4
+~~~~
+
+> This is the official postgres image.
+
+Postgres Community Docker Image:
+
+~~~~
+$ docker run --name postgres -d \
+    -e 'DB_USER=confluencedb' \
+    -e 'DB_PASS=jellyfish' \
+    -e 'DB_NAME=confluencedb' \
+    sameersbn/postgresql:9.4-12
+~~~~
+
+> This is the sameersbn/postgresql docker container I tested.
+
+Now start the Confluence container and let it use the container. On first startup you have to configure your Confluence yourself and fill it with a test license.
+
+1. Choose `Production Installation` because we have a postgres!
+2. Enter license information
+3. In `Choose a Database Configuration` choose `PostgeSQL` and press `External Database`
+4. In `Configure Database` press `Direct JDBC`
+5. In `Configure Database` fill out the form:
+
+* Driver Class Name: `org.postgresql.Driver`
+* Database URL: `jdbc:postgresql://postgres:5432/confluencedb`
+* User Name: `confluencedb`
+* Password: `jellyfish`
+
+~~~~
+$ docker run -d --name confluence \
+	  --link postgres:postgres \
+	  -p 80:8090 blacklabelops/confluence
+~~~~
+
+>  Start the Confluence and link it to the postgresql instance.
+
+## MySQL
+
+Let's take an MySQL container and set it up:
+
+MySQL Official Docker Image:
+
+~~~~
+$ docker run -d --name mysql \
+    -e 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword' \
+    -e 'MYSQL_DATABASE=confluencedb' \
+    -e 'MYSQL_USER=confluencedb' \
+    -e 'MYSQL_PASSWORD=jellyfish' \
+    mysql:5.6
+~~~~
+
+> This is the mysql docker container I tested.
+
+MySQL Community Docker Image:
+
+~~~~
+$ docker run -d --name mysql \
+    -e 'ON_CREATE_DB=confluencedb' \
+    -e 'MYSQL_USER=confluencedb' \
+    -e 'MYSQL_PASS=jellyfish' \
+    tutum/mysql:5.6
+~~~~
+
+> This is the tutum/mysql docker container I tested.
+
+Now start the Confluence container and let it use the container. On first startup you have to configure your Confluence yourself and fill it with a test license.
+
+1. Choose `Production Installation` because we have a mysql!
+2. Enter license information
+3. In `Choose a Database Configuration` choose `MySQL` and press `External Database`
+4. In `Configure Database` press `Direct JDBC`
+5. In `Configure Database` fill out the form:
+
+* Driver Class Name: `com.mysql.jdbc.Driver`
+* Database URL: `jdbc:mysql://mysql/confluencedb?sessionVariables=storage_engine%3DInnoDB&useUnicode=true&characterEncoding=utf8`
+* User Name: `confluencedb`
+* Password: `jellyfish`
+
+~~~~
+$ docker run -d --name confluence \
+	  --link mysql:mysql \
+	  -p 80:8090 blacklabelops/confluence
+~~~~
+
+>  Start the Confluence and link it to the postgresql instance.
+
+>  Start the Confluence and link it to the mysql instance.
+
 > Confluence will be available at http://yourdockerhost
 
 # Log File Configuration

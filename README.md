@@ -167,7 +167,7 @@ Simply: You can set user-id and group-id matching to a user and group from your 
 
 Due to security considerations this image is not running in root mode! The Jenkins process user inside the container is `confluence` and the user's group is `confluence`. This project offers a simplified mechanism for user- and group-mapping. You can set the uid of the user and gid of the user's group during build time.
 
-The process permissions are relevant when using volumes and mounted folders from the host machine. NGINX need read and write permissions on the host machine. You can set UID and GID of the NGINX's process during build time! UID and GID should resemble credentials from your host machine.
+The process permissions are relevant when using volumes and mounted folders from the host machine. Confluence need read and write permissions on the host machine. You can set UID and GID of the Confluence's process during build time! UID and GID should resemble credentials from your host machine.
 
 The following build arguments can be used:
 

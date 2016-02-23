@@ -1,6 +1,5 @@
 # Dockerized Atlassian Confluence
 
-
 [![Circle CI](https://circleci.com/gh/blacklabelops/confluence/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/confluence/tree/master)
 
 ## Supported tags and respective Dockerfile links
@@ -8,6 +7,12 @@
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
 | Confluence | 5.9.5 | 5.9.5, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
+
+## Related Images
+
+You may also like:
+
+* [blacklabelops/jira](https://github.com/blacklabelops/jira): Atlassian Ticket Management Tool
 
 # Make It Short
 

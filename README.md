@@ -176,20 +176,6 @@ $ docker run -d --name confluence \
 
 > Confluence will be available at http://yourdockerhost
 
-# Log File Configuration
-
-You can reconfigure the logfile location with the environment variable CONFLUENCE_LOGFILE_LOCATION!
-
-Example:
-
-~~~~
-$ docker run -d --name confluence \
-    -e "CONFLUENCE_LOGFILE_LOCATION=/var/atlassian/confluence/logs" \
-    blacklabelops/confluence
-~~~~
-
-> Will write logs to /var/atlassian/confluence/logs. Note: Must be accessible by daemon:daemon user!
-
 # Proxy Configuration
 
 You can specify your proxy host and proxy port with the environment variables CONFLUENCE_PROXY_NAME and CONFLUENCE_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!

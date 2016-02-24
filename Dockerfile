@@ -37,16 +37,6 @@ RUN export CONTAINER_USER=confluence                &&  \
     && wget -O /tmp/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz && \
     tar xzf /tmp/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz --strip-components=1 -C ${CONF_INSTALL} && \
     echo "confluence.home=${CONF_HOME}" > ${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties && \
-    xmlstarlet ed --inplace \
-        --delete "Server/@debug" \
-        --delete "Server/Service/Connector/@debug" \
-        --delete "Server/Service/Connector/@useURIValidationHack" \
-        --delete "Server/Service/Connector/@minProcessors" \
-        --delete "Server/Service/Connector/@maxProcessors" \
-        --delete "Server/Service/Engine/@debug" \
-        --delete "Server/Service/Engine/Host/@debug" \
-        --delete "Server/Service/Engine/Host/Context/@debug" \
-        "${CONF_INSTALL}/conf/server.xml" && \
     # Install database drivers
     rm -f                                               \
       ${CONF_INSTALL}/lib/mysql-connector-java*.jar &&  \

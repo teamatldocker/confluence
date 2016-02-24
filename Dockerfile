@@ -31,9 +31,6 @@ RUN export CONTAINER_USER=confluence                &&  \
       --repository                                      \
       http://dl-3.alpinelinux.org/alpine/edge/testing/  \
       --allow-untrusted                               && \
-    wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/2.22-r8/glibc-i18n-2.22-r8.apk && \
-    apk --allow-untrusted add /tmp/glibc-i18n-2.22-r8.apk && \
-    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     mkdir -p ${CONF_HOME} \
     && chown -R confluence:confluence ${CONF_HOME} \
     && mkdir -p ${CONF_INSTALL}/conf \

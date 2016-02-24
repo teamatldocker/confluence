@@ -30,8 +30,11 @@ RUN export CONTAINER_USER=confluence                &&  \
     apk add xmlstarlet --update-cache                   \
       --repository                                      \
       http://dl-3.alpinelinux.org/alpine/edge/testing/  \
-      --allow-untrusted                              \
-    && mkdir -p ${CONF_HOME} \
+      --allow-untrusted                               && \
+    wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/2.22-r8/glibc-i18n-2.22-r5.apk && \
+    apk --allow-untrusted add glibc-i18n-2.22-r5.apk && \
+    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
+    mkdir -p ${CONF_HOME} \
     && chown -R confluence:confluence ${CONF_HOME} \
     && mkdir -p ${CONF_INSTALL}/conf \
     && wget -O /tmp/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz && \

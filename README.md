@@ -2,6 +2,8 @@
 
 [![Circle CI](https://circleci.com/gh/blacklabelops/confluence/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/confluence/tree/master)
 
+"One place for all your team's work - Spend less time hunting things down and more time making things happen. Organize your work, create documents, and discuss everything in one place." - [[Source](https://www.atlassian.com/software/confluence)]
+
 ## Supported tags and respective Dockerfile links
 
 | Product |Version | Tags  | Dockerfile |
@@ -12,7 +14,10 @@
 
 You may also like:
 
-* [blacklabelops/jira](https://github.com/blacklabelops/jira): Atlassian Ticket Management Tool
+* [blacklabelops/jira](https://github.com/blacklabelops/jira): The #1 software development tool used by agile teams
+* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
+* [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
+* [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
 
 # Make It Short
 

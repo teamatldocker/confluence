@@ -50,6 +50,13 @@ RUN export CONTAINER_USER=confluence                &&  \
     wget -O ${CONF_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                                       \
       https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar && \
     chown -R confluence:confluence ${CONF_INSTALL} && \
+    # Adding letsencrypt-ca to truststore
+    wget -O /home/${CONTAINER_USER}/letsencryptauthorityx1.der https://letsencrypt.org/certs/letsencryptauthorityx1.der && \
+    keytool -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -importcert -file /home/${CONTAINER_USER}/letsencryptauthorityx1.der && \
+    rm -f /home/${CONTAINER_USER}/letsencryptauthorityx1.der && \
+    # Install atlassian ssl tool
+    wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/SSLPoke.class && \
+    chown -R confluence:confluence /home/${CONTAINER_USER} && \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \
     rm -rf /tmp/*                                   &&  \

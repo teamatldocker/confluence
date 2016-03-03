@@ -4,6 +4,7 @@ services:
   confluence:
     image: blacklabelops/confluence
     container_name: confluence
+    hostname: confluence
     networks:
       - confluencenet
     volumes:
@@ -22,6 +23,7 @@ services:
 
   postgresql:
     image: blacklabelops/postgres
+    container_name: postgres
     hostname: postgres
     networks:
       - confluencenet

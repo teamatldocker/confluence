@@ -55,7 +55,7 @@ RUN export CONTAINER_USER=confluence                &&  \
     keytool -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -importcert -file /home/${CONTAINER_USER}/letsencryptauthorityx1.der && \
     rm -f /home/${CONTAINER_USER}/letsencryptauthorityx1.der && \
     # Install atlassian ssl tool
-    wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/SSLPoke.class && \
+    wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \

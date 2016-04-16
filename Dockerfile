@@ -25,6 +25,7 @@ RUN export CONTAINER_USER=confluence                &&  \
     apk add --update                                    \
       ca-certificates                                   \
       gzip                                              \
+      curl                                              \
       tar                                               \
       wget                                          &&  \
     apk add xmlstarlet --update-cache                   \
@@ -57,6 +58,13 @@ RUN export CONTAINER_USER=confluence                &&  \
     # Install atlassian ssl tool
     wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
+    # Install Tini Zombie Reaper And Signal Forwarder
+    export TINI_VERSION=0.9.0 && \
+    export TINI_SHA=fa23d1e20732501c3bb8eeeca423c89ac80ed452 && \
+    curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static -o /bin/tini && \
+    chmod +x /bin/tini && \
+    # Remove obsolete packages and cleanup
+    apk del wget curl && \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \
     rm -rf /tmp/*                                   &&  \
@@ -73,5 +81,5 @@ VOLUME ["/var/atlassian/confluence"]
 # Set the default working directory as the Confluence home directory.
 WORKDIR ${CONF_HOME}
 COPY docker-entrypoint.sh /home/confluence/docker-entrypoint.sh
-ENTRYPOINT ["/home/confluence/docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/tini","--","/home/confluence/docker-entrypoint.sh"]
 CMD ["confluence"]

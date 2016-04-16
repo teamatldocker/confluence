@@ -73,6 +73,6 @@ fi
 
 if [ "$1" = 'confluence' ]; then
   /opt/atlassian/confluence/bin/start-confluence.sh -fg
+else
+  exec "$@"
 fi
-
-exec "$@"

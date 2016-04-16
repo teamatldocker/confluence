@@ -60,7 +60,6 @@ RUN export CONTAINER_USER=confluence                &&  \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
     # Install Tini Zombie Reaper And Signal Forwarder
     export TINI_VERSION=0.9.0 && \
-    export TINI_SHA=fa23d1e20732501c3bb8eeeca423c89ac80ed452 && \
     curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static -o /bin/tini && \
     chmod +x /bin/tini && \
     # Remove obsolete packages and cleanup

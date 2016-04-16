@@ -12,8 +12,7 @@ ENV CONF_HOME=/var/atlassian/confluence \
     MYSQL_DRIVER_VERSION=5.1.38 \
     POSTGRESQL_DRIVER_VERSION=9.4.1207
 
-# Install Atlassian Confluence and helper tools and setup initial home
-# directory structure.
+# Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \
     export CONTAINER_GROUP=confluence               &&  \
     addgroup -g $CONTAINER_GID $CONTAINER_GROUP     &&  \
@@ -22,6 +21,7 @@ RUN export CONTAINER_USER=confluence                &&  \
             -h /home/$CONTAINER_USER                    \
             -s /bin/bash                                \
             -S $CONTAINER_USER                      &&  \
+
     apk add --update                                    \
       ca-certificates                                   \
       gzip                                              \
@@ -70,13 +70,10 @@ RUN export CONTAINER_USER=confluence                &&  \
     rm -rf /tmp/*                                   &&  \
     rm -rf /var/log/*
 
-
 # Expose default HTTP connector port.
 EXPOSE 8090
 
-# Set volume mount points for installation and home directory. Changes to the
-# home directory needs to be persisted as well as parts of the installation
-# directory due to eg. logs.
+USER confluence
 VOLUME ["/var/atlassian/confluence"]
 # Set the default working directory as the Confluence home directory.
 WORKDIR ${CONF_HOME}

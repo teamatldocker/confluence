@@ -72,7 +72,7 @@ if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
 fi
 
 if [ "$1" = 'confluence' ]; then
-  /opt/atlassian/confluence/bin/start-confluence.sh -fg
+  exec /opt/atlassian/confluence/bin/start-confluence.sh -fg
 else
   exec "$@"
 fi

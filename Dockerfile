@@ -28,10 +28,10 @@ RUN export CONTAINER_USER=confluence                &&  \
       curl                                              \
       tar                                               \
       wget                                          &&  \
-    apk add xmlstarlet --update-cache                   \
-      --repository                                      \
-      http://dl-3.alpinelinux.org/alpine/edge/testing/  \
-      --allow-untrusted                               && \
+    # Install xmlstarlet
+    export XMLSTARLET_VERSION=1.6.1-r1              &&  \
+    wget --directory-prefix=/tmp https://github.com/menski/alpine-pkg-xmlstarlet/releases/download/${XMLSTARLET_VERSION}/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
+    apk add --allow-untrusted /tmp/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
     mkdir -p ${CONF_HOME} \
     && chown -R confluence:confluence ${CONF_HOME} \
     && mkdir -p ${CONF_INSTALL}/conf \

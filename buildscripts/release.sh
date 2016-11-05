@@ -3,4 +3,4 @@
 #------------------
 # CONTAINER VARIABLES
 #------------------
-export CONFLUENCE_VERSION=5.10.8
+export CONFLUENCE_VERSION=6.0.1

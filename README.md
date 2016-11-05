@@ -8,7 +8,7 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 5.10.7 | 5.10.7, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
+| Confluence | 6.0.1 | 6.0.1, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
 
 ## Related Images
 

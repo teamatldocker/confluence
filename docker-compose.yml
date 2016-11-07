@@ -11,6 +11,7 @@ services:
       - confluencedata:/var/atlassian/confluence
     ports:
       - '80:8090'
+      - '8091:8091'
     environment:
       - 'CATALINA_OPTS= -Xms256m -Xmx1g'
       - 'CONFLUENCE_PROXY_NAME='

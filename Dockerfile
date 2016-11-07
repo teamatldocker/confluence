@@ -80,7 +80,7 @@ RUN export CONTAINER_USER=confluence                &&  \
     rm -rf /var/log/*
 
 # Expose default HTTP connector port.
-EXPOSE 8090
+EXPOSE 8090 8091
 
 USER confluence
 VOLUME ["/var/atlassian/confluence"]

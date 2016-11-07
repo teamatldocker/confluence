@@ -22,7 +22,7 @@ You may also like:
 # Make It Short
 
 ~~~~
-$ docker run -d -p 80:8090 --name confluence blacklabelops/confluence
+$ docker run -d -p 80:8090 -p 8091:8091 --name confluence blacklabelops/confluence
 ~~~~
 
 # Setup
@@ -52,7 +52,7 @@ Secondly start Confluence with a link to postgres:
 ~~~~
 $ docker run -d --name confluence \
 	  --link postgres:postgres \
-	  -p 80:8090 blacklabelops/confluence
+	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
 ~~~~
 
 >  Start the Confluence and link it to the postgresql instance.
@@ -127,7 +127,7 @@ Now start the Confluence container and let it use the container. On first startu
 ~~~~
 $ docker run -d --name confluence \
 	  --link postgres:postgres \
-	  -p 80:8090 blacklabelops/confluence
+	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
 ~~~~
 
 >  Start the Confluence and link it to the postgresql instance.
@@ -177,7 +177,7 @@ Now start the Confluence container and let it use the container. On first startu
 ~~~~
 $ docker run -d --name confluence \
 	  --link mysql:mysql \
-	  -p 80:8090 blacklabelops/confluence
+	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
 ~~~~
 
 >  Start the Confluence and link it to the postgresql instance.
@@ -212,6 +212,8 @@ $ docker run -d --name confluence \
 
 # NGINX HTTP Proxy
 
+> Note: This section cannot be applied to Confluence 6. Work In Progress!
+
 This is an example on running Atlassian Confluence behind NGINX with 2 Docker commands!
 
 First start Confluence:
@@ -239,6 +241,8 @@ $ docker run -d \
 > Confluence will be available at http://boot2docker-ip or http://localhost. Depends if you running Docker locally or if you use Dockertools.
 
 # NGINX HTTPS Proxy
+
+> Note: This section cannot be applied to Confluence 6. Work In Progress!
 
 This is an example on running Atlassian Confluence behind NGINX with 2 Docker commands!
 

@@ -43,6 +43,12 @@ function processConfluenceProxySettings() {
   fi
 }
 
+function processContextPath() {
+  if [ -n "${CONFLUENCE_CONTEXT_PATH}" ]; then
+    xmlstarlet ed -P -S -L --update "//Context/@path" --value "${CONFLUENCE_CONTEXT_PATH}" ${CONF_INSTALL}/conf/server.xml
+  fi
+}
+
 function relayConfluenceLogFiles() {
   TARGET_PROPERTY=1catalina.org.apache.juli.AsyncFileHandler.directory
   sed -i "/${TARGET_PROPERTY}/d" ${CONF_INSTALL}/conf/logging.properties
@@ -65,6 +71,8 @@ fi
 createConfluenceTempDirectory
 
 processConfluenceProxySettings
+
+processContextPath
 
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   processConfluenceLogfileSettings

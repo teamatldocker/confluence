@@ -212,15 +212,33 @@ $ docker run -d --name confluence \
 
 # NGINX HTTP Proxy
 
-> Note: This section cannot be applied to Confluence 6. Work In Progress!
-
 This is an example on running Atlassian Confluence behind NGINX with 2 Docker commands!
+
+Prerequisite:
+
+If you want to try the stack on your local compute then setup the following domains in your host settings (Mac/Linux: /etc/hosts):
+
+~~~~
+127.0.0.1	confluence.yourhost.com
+~~~~
+
+Then create a Docker network for communication between Confluence and Nginx:
+
+~~~~
+$ docker network create confluence
+~~~~
+
+## Confluence 6
 
 First start Confluence:
 
 ~~~~
 $ docker run -d --name confluence \
-    -e "CONFLUENCE_PROXY_NAME=www.example.com" \
+	  --hostname confluence \
+	  --network confluence \
+	  -v confluencedata:/var/atlassian/confluence \
+	  -e "CONFLUENCE_CONTEXT_PATH=/confluence" \
+    -e "CONFLUENCE_PROXY_NAME=confluence.yourhost.com" \
     -e "CONFLUENCE_PROXY_PORT=80" \
     -e "CONFLUENCE_PROXY_SCHEME=http" \
     blacklabelops/confluence
@@ -232,27 +250,77 @@ Then start NGINX:
 $ docker run -d \
     -p 80:80 \
     --name nginx \
-    --link confluence:confluence
+    --network confluence \
+    -e "SERVER1SERVER_NAME=confluence.yourhost.com" \
+    -e "SERVER1REVERSE_PROXY_LOCATION1=/synchrony" \
+    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8091" \
+    -e "SERVER1REVERSE_PROXY_APPLICATION1=confluence6" \
+    -e "SERVER1REVERSE_PROXY_LOCATION2=/" \
+    -e "SERVER1REVERSE_PROXY_PASS2=http://confluence:8090" \
+    -e "SERVER1REVERSE_PROXY_APPLICATION2=confluence" \
+    blacklabelops/nginx
+~~~~
+
+> Confluence will be available at http://confluence.yourhost.com.
+
+## Confluence 5
+
+First start Confluence:
+
+~~~~
+$ docker run -d \
+    --name confluence \
+    --hostname confluence \
+	  --network confluence \
+    -e "CONFLUENCE_PROXY_NAME=confluence.yourhost.com" \
+    -e "CONFLUENCE_PROXY_PORT=80" \
+    -e "CONFLUENCE_PROXY_SCHEME=http" \
+    blacklabelops/confluence
+~~~~
+
+Then start NGINX:
+
+~~~~
+$ docker run -d \
+    -p 80:80 \
+    --name nginx \
+    --network confluence \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8090" \
     blacklabelops/nginx
 ~~~~
 
-> Confluence will be available at http://boot2docker-ip or http://localhost. Depends if you running Docker locally or if you use Dockertools.
+> Confluence will be available at http://confluence.yourhost.com.
 
 # NGINX HTTPS Proxy
-
-> Note: This section cannot be applied to Confluence 6. Work In Progress!
 
 This is an example on running Atlassian Confluence behind NGINX with 2 Docker commands!
 
 Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [blacklabelops/nginx](https://github.com/blacklabelops/nginx)
 
+Prerequisite:
+
+If you want to try the stack on your local compute then setup the following domains in your host settings (Mac/Linux: /etc/hosts):
+
+~~~~
+127.0.0.1	confluence.yourhost.com
+~~~~
+
+Then create a Docker network for communication between Confluence and Nginx:
+
+~~~~
+$ docker network create confluence
+~~~~
+
+## Confluence 5
+
 First start Confluence:
 
 ~~~~
 $ docker run -d --name confluence \
-    -e "CONFLUENCE_PROXY_NAME=crusty.springfield.com" \
+    --hostname confluence \
+    --network confluence \
+    -e "CONFLUENCE_PROXY_NAME=confluence.yourhost.com" \
     -e "CONFLUENCE_PROXY_PORT=443" \
     -e "CONFLUENCE_PROXY_SCHEME=https" \
     blacklabelops/confluence
@@ -264,16 +332,20 @@ Then start NGINX:
 $ docker run -d \
     -p 443:443 \
     --name nginx \
-    --link confluence:confluence
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8090" \
-    -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
+    --network confluence \
+    -e "SERVER1REVERSE_PROXY_LOCATION1=/synchrony" \
+    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8091" \
+    -e "SERVER1REVERSE_PROXY_APPLICATION1=confluence6" \
+    -e "SERVER1REVERSE_PROXY_LOCATION2=/" \
+    -e "SERVER1REVERSE_PROXY_PASS2=http://confluence:8090" \
+    -e "SERVER1REVERSE_PROXY_APPLICATION2=confluence" \
+    -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=confluence.yourhost.com/L=Springfield/C=US" \
     -e "SERVER1HTTPS_ENABLED=true" \
     -e "SERVER1HTTP_ENABLED=false" \
     blacklabelops/nginx
 ~~~~
 
-> Confluence will be available at https://boot2docker-ip or https://localhost. Depends if you running Docker locally or if you use Dockertools.
+> Confluence will be available at https://confluence.yourhost.com.
 
 # Build The Image
 
@@ -294,7 +366,7 @@ $ docker build -t blacklabelops/confluence .
 Build image with a specific Confluence release:
 
 ~~~~
-$ docker build --build-arg CONFLUENCE_VERSION=5.9.5  -t blacklabelops/confluence .
+$ docker build --build-arg CONFLUENCE_VERSION=6.0.1  -t blacklabelops/confluence .
 ~~~~
 
 > Note: Dockerfile must be inside the current directory!
@@ -309,7 +381,7 @@ jenkins:
     context: .
     dockerfile: Dockerfile
     args:
-      CONFLUENCE_VERSION: 5.9.5
+      CONFLUENCE_VERSION: 6.0.1
 ~~~~
 
 > Adjust CONFLUENCE_VERSION for your personal needs.

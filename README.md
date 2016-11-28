@@ -8,7 +8,7 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 6.0.1 | 6.0.1, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
+| Confluence | 6.0.2 | 6.0.2, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
 
 ## Related Images
 
@@ -366,7 +366,7 @@ $ docker build -t blacklabelops/confluence .
 Build image with a specific Confluence release:
 
 ~~~~
-$ docker build --build-arg CONFLUENCE_VERSION=6.0.1  -t blacklabelops/confluence .
+$ docker build --build-arg CONFLUENCE_VERSION=6.0.2  -t blacklabelops/confluence .
 ~~~~
 
 > Note: Dockerfile must be inside the current directory!
@@ -381,7 +381,7 @@ jenkins:
     context: .
     dockerfile: Dockerfile
     args:
-      CONFLUENCE_VERSION: 6.0.1
+      CONFLUENCE_VERSION: 6.0.2
 ~~~~
 
 > Adjust CONFLUENCE_VERSION for your personal needs.

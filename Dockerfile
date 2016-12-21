@@ -10,7 +10,7 @@ ARG CONTAINER_GID=1000
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
     MYSQL_DRIVER_VERSION=5.1.38 \
-    POSTGRESQL_DRIVER_VERSION=9.4.1207
+    POSTGRESQL_DRIVER_VERSION=9.4.1212
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \

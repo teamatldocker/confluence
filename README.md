@@ -431,6 +431,11 @@ $ vagrant ssh
 
 > Confluence will be available on localhost:8080 on the host machine.
 
+# A word about memory usage
+
+Confluence like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise your Confluence will begin to restart randomly. 
+You should give at least 1-2GB more than the JVM maximum memory setting to your container.
+
 # Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)

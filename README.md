@@ -438,7 +438,7 @@ You should give at least 1-2GB more than the JVM maximum memory setting to your 
 
 # Support & Feature Requests
 
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/geogBFvEM)
+Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
 
 # Credits
 

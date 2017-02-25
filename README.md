@@ -37,7 +37,9 @@ First start the database server:
 > Note: Change Password!
 
 ~~~~
+$ docker network create confluencenet
 $ docker run --name postgres -d \
+    --network confluencenet \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
     -e 'POSTGRES_ENCODING=UTF8' \
@@ -52,7 +54,7 @@ Secondly start Confluence with a link to postgres:
 
 ~~~~
 $ docker run -d --name confluence \
-	  --link postgres:postgres \
+	  --network confluencenet \
 	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
 ~~~~
 
@@ -91,7 +93,9 @@ Let's take an PostgreSQL Docker Image and set it up:
 Postgres Official Docker Image:
 
 ~~~~
+$ docker network create confluencenet
 $ docker run --name postgres -d \
+    --network confluencenet \
     -e 'POSTGRES_DB=confluencedb' \
     -e 'POSTGRES_USER=confluencedb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
@@ -103,7 +107,9 @@ $ docker run --name postgres -d \
 Postgres Community Docker Image:
 
 ~~~~
+$ docker network create confluencenet
 $ docker run --name postgres -d \
+    --network confluencenet \
     -e 'DB_USER=confluencedb' \
     -e 'DB_PASS=jellyfish' \
     -e 'DB_NAME=confluencedb' \
@@ -127,7 +133,7 @@ Now start the Confluence container and let it use the container. On first startu
 
 ~~~~
 $ docker run -d --name confluence \
-	  --link postgres:postgres \
+	  --network confluencenet \
 	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
 ~~~~
 
@@ -140,6 +146,7 @@ Let's take an MySQL container and set it up:
 MySQL Official Docker Image:
 
 ~~~~
+$ docker network create confluencenet
 $ docker run -d --name mysql \
     -e 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword' \
     -e 'MYSQL_DATABASE=confluencedb' \
@@ -153,6 +160,7 @@ $ docker run -d --name mysql \
 MySQL Community Docker Image:
 
 ~~~~
+$ docker network create confluencenet
 $ docker run -d --name mysql \
     -e 'ON_CREATE_DB=confluencedb' \
     -e 'MYSQL_USER=confluencedb' \
@@ -177,13 +185,11 @@ Now start the Confluence container and let it use the container. On first startu
 
 ~~~~
 $ docker run -d --name confluence \
-	  --link mysql:mysql \
+	  --network confluencenet \
 	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
 ~~~~
 
->  Start the Confluence and link it to the postgresql instance.
-
->  Start the Confluence and link it to the mysql instance.
+>  Start Confluence
 
 > Confluence will be available at http://yourdockerhost
 

@@ -16,7 +16,8 @@ ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
     CONF_SCRIPT_HOME=/home/confluence \
     MYSQL_DRIVER_VERSION=5.1.40 \
-    POSTGRESQL_DRIVER_VERSION=9.4.1212
+    POSTGRESQL_DRIVER_VERSION=9.4.1212 \
+    LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \
@@ -82,9 +83,13 @@ RUN export CONTAINER_USER=confluence                &&  \
     rm -rf /var/log/*
 
 # Image Metadata
-LABEL com.blacklabelops.application.confluence.version=$JIRA_PRODUCT-$JIRA_VERSION \
+LABEL com.blacklabelops.application.confluence.version=$CONFLUENCE_VERSION \
+      com.blacklabelops.application.confluence.setting.language=$LANG_LANGUAGE \
+      com.blacklabelops.application.confluence.setting.country=$LANG_COUNTRY \
       com.blacklabelops.application.confluence.userid=$CONTAINER_UID \
       com.blacklabelops.application.confluence.groupid=$CONTAINER_GID \
+      com.blacklabelops.application.version.jdbc-mysql=$MYSQL_DRIVER_VERSION \
+      com.blacklabelops.application.version.jdbc-postgres=$POSTGRESQL_DRIVER_VERSION \
       com.blacklabelops.image.builddate.confluence=${BUILD_DATE}
 
 # Expose default HTTP connector port.

@@ -195,6 +195,31 @@ $ docker run -d --name confluence \
 
 > Confluence will be available at http://yourdockerhost
 
+# Database Wait Feature
+
+The confluence container can wait for the database container to start up. You have to specify the
+host and port of your database container and Confluence will wait up to one minute for the database.
+
+You can define a the waiting parameters with the enviromnemt variables:
+
+* `DOCKER_WAIT_HOST`: The host to poll. Mandatory!
+* `DOCKER_WAIT_PORT`: The port to poll Mandatory!
+* `DOCKER_WAIT_TIMEOUT`: The timeout in seconds. Optional! Default: 60
+* `CURRENT_DOCKER_WAIT_INTERVAL`: The polling interval in seconds. Optional! Default:5
+
+Example waiting for a postgresql database:
+
+First start the polling container:
+
+~~~~
+$ docker run -d --name confluence \
+    -e "DOCKER_WAIT_HOST=your_postgres_host" \
+    -e "DOCKER_WAIT_PORT=5432" \
+    -p 80:8090 -p 8091:8091 blacklabelops/confluence
+~~~~
+
+> Waits at most 60 seconds for the database.
+
 # Confluence Configuration Properties
 
 You can specify configuration entries for the Confluence configuration file `confluence.cfg.xml`. The entries will be added or

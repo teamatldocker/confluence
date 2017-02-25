@@ -148,6 +148,7 @@ MySQL Official Docker Image:
 ~~~~
 $ docker network create confluencenet
 $ docker run -d --name mysql \
+    --network confluencenet \
     -e 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword' \
     -e 'MYSQL_DATABASE=confluencedb' \
     -e 'MYSQL_USER=confluencedb' \
@@ -162,6 +163,7 @@ MySQL Community Docker Image:
 ~~~~
 $ docker network create confluencenet
 $ docker run -d --name mysql \
+    --network confluencenet \
     -e 'ON_CREATE_DB=confluencedb' \
     -e 'MYSQL_USER=confluencedb' \
     -e 'MYSQL_PASS=jellyfish' \
@@ -268,13 +270,10 @@ Then create a Docker network for communication between Confluence and Nginx:
 $ docker network create confluence
 ~~~~
 
-## Confluence 6
-
 First start Confluence:
 
 ~~~~
 $ docker run -d --name confluence \
-	  --hostname confluence \
 	  --network confluence \
 	  -v confluencedata:/var/atlassian/confluence \
 	  -e "CONFLUENCE_CONTEXT_PATH=/confluence" \
@@ -303,35 +302,6 @@ $ docker run -d \
 
 > Confluence will be available at http://confluence.yourhost.com.
 
-## Confluence 5
-
-First start Confluence:
-
-~~~~
-$ docker run -d \
-    --name confluence \
-    --hostname confluence \
-	  --network confluence \
-    -e "CONFLUENCE_PROXY_NAME=confluence.yourhost.com" \
-    -e "CONFLUENCE_PROXY_PORT=80" \
-    -e "CONFLUENCE_PROXY_SCHEME=http" \
-    blacklabelops/confluence
-~~~~
-
-Then start NGINX:
-
-~~~~
-$ docker run -d \
-    -p 80:80 \
-    --name nginx \
-    --network confluence \
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8090" \
-    blacklabelops/nginx
-~~~~
-
-> Confluence will be available at http://confluence.yourhost.com.
-
 # NGINX HTTPS Proxy
 
 This is an example on running Atlassian Confluence behind NGINX with 2 Docker commands!
@@ -352,13 +322,10 @@ Then create a Docker network for communication between Confluence and Nginx:
 $ docker network create confluence
 ~~~~
 
-## Confluence 5
-
 First start Confluence:
 
 ~~~~
 $ docker run -d --name confluence \
-    --hostname confluence \
     --network confluence \
     -e "CONFLUENCE_PROXY_NAME=confluence.yourhost.com" \
     -e "CONFLUENCE_PROXY_PORT=443" \
@@ -458,6 +425,17 @@ $ docker build --build-arg CONTAINER_UID=2000 --build-arg CONTAINER_GID=2000 -t 
 Confluence like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise your Confluence will begin to restart randomly.
 You should give at least 1-2GB more than the JVM maximum memory setting to your container.
 
+Example:
+
+~~~~
+$ docker run -d -p 80:8090 -p 8091:8091 \
+    --name confluence \
+    -e "CATALINA_OPTS=-Xms1g -Xmx2g" \
+    blacklabelops/confluence
+~~~~
+
+> CATALINA_OPTS sets webserver startup properties.
+
 # Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
@@ -469,7 +447,8 @@ This project is very grateful for code and examples from the repositories:
 * [atlassianlabs/atlassian-docker](https://bitbucket.org/atlassianlabs/atlassian-docker)
 * [cptactionhank/docker-atlassian-confluence](https://github.com/cptactionhank/docker-atlassian-confluence)
 
-## References
+# References
+
 * [Atlassian Confluence](https://www.atlassian.com/software/confluence)
 * [Docker Homepage](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/)

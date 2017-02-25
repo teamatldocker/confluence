@@ -420,7 +420,7 @@ $ docker build --build-arg CONTAINER_UID=2000 --build-arg CONTAINER_GID=2000 -t 
 
 > The container will write and read files with UID 2000 and GID 2000.
 
-# A word about memory usage
+# A Word About Memory Usage
 
 Confluence like any Java application needs a huge amount of memory. If you limit the memory usage by using the Docker --mem option make sure that you give enough memory. Otherwise your Confluence will begin to restart randomly.
 You should give at least 1-2GB more than the JVM maximum memory setting to your container.

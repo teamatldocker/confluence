@@ -479,6 +479,16 @@ $ docker run -d -p 80:8090 -p 8091:8091 \
 
 > CATALINA_OPTS sets webserver startup properties.
 
+# Container Metadata
+
+You can inspect image metadata with the following command:
+
+~~~~
+$ docker inspect --format='{{json .Config.Labels}}' blacklabelops/confluence
+~~~~
+
+> Displays image metadata, e.g. image build date.
+
 # Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)

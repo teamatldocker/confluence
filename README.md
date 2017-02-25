@@ -434,8 +434,8 @@ The process permissions are relevant when using volumes and mounted folders from
 
 The following build arguments can be used:
 
-* CONTAINER_UID: Set the user-id of the process. (default: 1000)
-* CONTAINER_GID: Set the group-id of the process. (default: 1000)
+* `CONTAINER_UID`: Set the user-id of the process. (default: 1000)
+* `CONTAINER_GID`: Set the group-id of the process. (default: 1000)
 
 Example:
 
@@ -444,6 +444,24 @@ $ docker build --build-arg CONTAINER_UID=2000 --build-arg CONTAINER_GID=2000 -t 
 ~~~~
 
 > The container will write and read files with UID 2000 and GID 2000.
+
+# Container Language Settings
+
+You can specify the images language and country code. This can help you when Confluence does not display the characters
+of your language correcty.
+
+The following build arguments can be used:
+
+* `LANG_LANGUAGE`: Set the operating systems language code. (default: en)
+* `LANG_COUNTRY`: Set the operating systems country code. (default: US)
+
+Example:
+
+~~~~
+$ docker build --build-arg LANG_LANGUAGE=de --build-arg LANG_COUNTRY=DE -t blacklabelops/confluence .
+~~~~
+
+> Builds image for german language and country code. E.g. when `Ö` is not displayed correctly inside Confluence.
 
 # A Word About Memory Usage
 

@@ -1,15 +1,21 @@
-FROM blacklabelops/java:jre8
+FROM blacklabelops/java:jre.8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 ARG CONFLUENCE_VERSION=6.0.4
 # permissions
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
+# Image Build Date By Buildsystem
+ARG BUILD_DATE=undefined
+# Language Settings
+ARG LANG_LANGUAGE=en
+ARG LANG_COUNTRY=US
 
 # Setup useful environment variables
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
-    MYSQL_DRIVER_VERSION=5.1.38 \
+    CONF_SCRIPT_HOME=/home/confluence \
+    MYSQL_DRIVER_VERSION=5.1.40 \
     POSTGRESQL_DRIVER_VERSION=9.4.1212
 
 # Install Atlassian Confluence
@@ -27,11 +33,11 @@ RUN export CONTAINER_USER=confluence                &&  \
       gzip                                              \
       curl                                              \
       tar                                               \
+      xmlstarlet                                        \
       wget                                          &&  \
-    # Install xmlstarlet
-    export XMLSTARLET_VERSION=1.6.1-r1              &&  \
-    wget --directory-prefix=/tmp https://github.com/menski/alpine-pkg-xmlstarlet/releases/download/${XMLSTARLET_VERSION}/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
-    apk add --allow-untrusted /tmp/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
+    # Setting Locale
+    /usr/glibc-compat/bin/localedef -i ${LANG_LANGUAGE}_${LANG_COUNTRY} -f UTF-8 ${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8 && \
+    # Installing Confluence
     mkdir -p ${CONF_HOME} \
     && chown -R confluence:confluence ${CONF_HOME} \
     && mkdir -p ${CONF_INSTALL}/conf \
@@ -68,10 +74,6 @@ RUN export CONTAINER_USER=confluence                &&  \
     # Install atlassian ssl tool
     wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
-    # Install Tini Zombie Reaper And Signal Forwarder
-    export TINI_VERSION=0.9.0 && \
-    curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static -o /bin/tini && \
-    chmod +x /bin/tini && \
     # Remove obsolete packages and cleanup
     apk del wget curl && \
     # Clean caches and tmps
@@ -79,13 +81,19 @@ RUN export CONTAINER_USER=confluence                &&  \
     rm -rf /tmp/*                                   &&  \
     rm -rf /var/log/*
 
+# Image Metadata
+LABEL com.blacklabelops.application.confluence.version=$JIRA_PRODUCT-$JIRA_VERSION \
+      com.blacklabelops.application.confluence.userid=$CONTAINER_UID \
+      com.blacklabelops.application.confluence.groupid=$CONTAINER_GID \
+      com.blacklabelops.image.builddate.confluence=${BUILD_DATE}
+
 # Expose default HTTP connector port.
 EXPOSE 8090 8091
 
 USER confluence
-VOLUME ["/var/atlassian/confluence"]
+VOLUME ["${CONF_HOME}"]
 # Set the default working directory as the Confluence home directory.
 WORKDIR ${CONF_HOME}
-COPY docker-entrypoint.sh /home/confluence/docker-entrypoint.sh
-ENTRYPOINT ["/bin/tini","--","/home/confluence/docker-entrypoint.sh"]
+COPY docker-entrypoint.sh ${CONF_SCRIPT_HOME}/docker-entrypoint.sh
+ENTRYPOINT ["/sbin/tini","--","/home/confluence/docker-entrypoint.sh"]
 CMD ["confluence"]

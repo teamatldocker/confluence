@@ -1,14 +1,14 @@
 # Dockerized Atlassian Confluence
 
-[![Circle CI](https://circleci.com/gh/blacklabelops/confluence/tree/master.svg?style=shield)](https://circleci.com/gh/blacklabelops/confluence/tree/master)
+[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/)
 
 "One place for all your team's work - Spend less time hunting things down and more time making things happen. Organize your work, create documents, and discuss everything in one place." - [[Source](https://www.atlassian.com/software/confluence)]
 
-## Supported tags and respective Dockerfile links
+## Supported Tags And Respective Dockerfile Links
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 6.0.4 | 6.0.4, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
+| Confluence | 6.0.6 | 6.0.6, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
 
 ## Related Images
 
@@ -18,6 +18,7 @@ You may also like:
 * [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
 * [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
 * [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
+* [blacklabelops/crucible](https://github.com/blacklabelops/crucible): Source Code Review
 
 # Make It Short
 

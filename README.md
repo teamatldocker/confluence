@@ -4,13 +4,13 @@
 
 "One place for all your team's work - Spend less time hunting things down and more time making things happen. Organize your work, create documents, and discuss everything in one place." - [[Source](https://www.atlassian.com/software/confluence)]
 
-## Supported Tags And Respective Dockerfile Links
+# Supported Tags And Respective Dockerfile Links
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
 | Confluence | 6.0.6 | 6.0.6, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
 
-## Related Images
+# Related Images
 
 You may also like:
 
@@ -205,7 +205,7 @@ You can define a the waiting parameters with the enviromnemt variables:
 * `DOCKER_WAIT_HOST`: The host to poll. Mandatory!
 * `DOCKER_WAIT_PORT`: The port to poll Mandatory!
 * `DOCKER_WAIT_TIMEOUT`: The timeout in seconds. Optional! Default: 60
-* `CURRENT_DOCKER_WAIT_INTERVAL`: The polling interval in seconds. Optional! Default:5
+* `DOCKER_WAIT_INTERVAL`: The polling interval in seconds. Optional! Default:5
 
 Example waiting for a postgresql database:
 

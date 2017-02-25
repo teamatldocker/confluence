@@ -186,6 +186,39 @@ $ docker run -d --name confluence \
 
 > Confluence will be available at http://yourdockerhost
 
+# Confluence Configuration Properties
+
+You can specify configuration entries for the Confluence configuration file `confluence.cfg.xml`. The entries will be added or
+updated after the configuration file is available, e.g. after confluence installation. You can specify those entries with
+enumerated environment variables, they will be executed at each container restart.
+
+Environment Variables:
+
+* `CONFLUENCE_CONFIG_PROPERTY`: The name of each configuration property.
+* `CONFLUENCE_CONFIG_VALUE`: The value for each configuration property.
+
+Example:
+
+* Setting property `synchrony.btf` to `true`
+* Adding property `confluence.webapp.context.path` to `/confluence`
+
+~~~~
+$ docker run -d -p 80:8090 -p 8091:8091 \
+    --name confluence \
+    -e "CONFLUENCE_CONFIG_PROPERTY1=synchrony.btf" \
+    -e "CONFLUENCE_CONFIG_VALUE1=true" \
+    -e "CONFLUENCE_CONFIG_PROPERTY2=confluence.webapp.context.path" \
+    -e "CONFLUENCE_CONFIG_VALUE2=/confluence" \
+    blacklabelops/confluence
+~~~~
+
+> Each environment variable must be enumerated with a postfix number, starting with 1!
+
+Note: When starting Confluence the first time there will be no configuration file `confluence.cfg.xml`. You will
+have to restart your container `docker restart confluence` then your settings will take effect.
+
+Note: Settings will be adjusted at each container restart. There are properties that can be changed inside Confluence. You may not want to overwrite your application setting at each restart.
+
 # Proxy Configuration
 
 You can specify your proxy host and proxy port with the environment variables CONFLUENCE_PROXY_NAME and CONFLUENCE_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
@@ -412,24 +445,6 @@ $ docker build --build-arg CONTAINER_UID=2000 --build-arg CONTAINER_GID=2000 -t 
 ~~~~
 
 > The container will write and read files with UID 2000 and GID 2000.
-
-# Vagrant
-
-First install:
-
-* [Vagrant](https://www.vagrantup.com/)
-* [Virtualbox](https://www.virtualbox.org/)
-
-Vagrant is fabulous tool for pulling and spinning up virtual machines like docker with containers. I can configure my development and test environment and simply pull it online. And so can you! Install Vagrant and Virtualbox and spin it up. Change into the project folder and build the project on the spot!
-
-~~~~
-$ vagrant up
-$ vagrant ssh
-[vagrant@localhost ~]$ cd /vagrant
-[vagrant@localhost ~]$ docker-compose up
-~~~~
-
-> Confluence will be available on localhost:8080 on the host machine.
 
 # A word about memory usage
 

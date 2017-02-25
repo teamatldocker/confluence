@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # A helper script for ENTRYPOINT.
 #
@@ -64,6 +64,35 @@ function relayConfluenceLogFiles() {
   echo "${TARGET_PROPERTY} = ${confluence_logfile}" >> ${CONF_INSTALL}/conf/logging.properties
 }
 
+function setConfluenceConfigurationProperty() {
+  local configurationProperty=$1
+  local configurationValue=$2
+  if [ -n "${configurationProperty}" ]; then
+    local propertyCount=$(xmlstarlet sel -t -v "count(//property[@name='${configurationProperty}'])" ${CONF_HOME}/confluence.cfg.xml)
+    if [ "${propertyCount}" = '0' ]; then
+      # Element does not exist, we insert new property
+      xmlstarlet ed --pf --inplace --subnode '//properties' --type elem --name 'property' --value "${configurationValue}" -i '//properties/property[not(@name)]' --type attr --name 'name' --value "${configurationProperty}" ${CONF_HOME}/confluence.cfg.xml
+    else
+      # Element exists, we update the existing property
+      xmlstarlet ed --pf --inplace --update "//property[@name='${configurationProperty}']" --value "${configurationValue}" ${CONF_HOME}/confluence.cfg.xml
+    fi
+  fi
+}
+
+function processConfluenceConfigurationSettings() {
+  if [ -f "${CONF_HOME}/confluence.cfg.xml" ]; then
+    for (( i=1; ; i++ ))
+    do
+      VAR_CONFLUENCE_CONFIG_PROPERTY="CONFLUENCE_CONFIG_PROPERTY$i"
+      VAR_CONFLUENCE_CONFIG_VALUE="CONFLUENCE_CONFIG_VALUE$i"
+      if [ ! -n "${!VAR_CONFLUENCE_CONFIG_PROPERTY}" ]; then
+        break
+      fi
+      setConfluenceConfigurationProperty ${!VAR_CONFLUENCE_CONFIG_PROPERTY} ${!VAR_CONFLUENCE_CONFIG_VALUE}
+    done
+  fi
+}
+
 if [ -n "${CONFLUENCE_DELAYED_START}" ]; then
   sleep ${CONFLUENCE_DELAYED_START}
 fi
@@ -74,12 +103,15 @@ processConfluenceProxySettings
 
 processContextPath
 
+processConfluenceConfigurationSettings
+
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   processConfluenceLogfileSettings
   relayConfluenceLogFiles
 fi
 
 if [ "$1" = 'confluence' ]; then
+  source /usr/bin/dockerwait
   exec /opt/atlassian/confluence/bin/start-confluence.sh -fg
 else
   exec "$@"

@@ -93,6 +93,37 @@ function processConfluenceConfigurationSettings() {
   fi
 }
 
+function setCatalinaConfigurationProperty() {
+  local configurationProperty=$1
+  local configurationValue=$2
+  local catalinaproperty=""
+  if [ -n "${configurationProperty}" ]; then
+    sed -i "/${configurationProperty}/d" ${CONF_INSTALL}/bin/setenv.sh
+    catalinaproperty="CATALINA_OPTS=\"-D"${configurationProperty}
+    if [ -n "${configurationValue}" ]; then
+      catalinaproperty=${catalinaproperty}"="${configurationValue}
+    fi
+    catalinaproperty=${catalinaproperty}" "'${CATALINA_OPTS}'"\""
+    echo ${catalinaproperty} >> ${CONF_INSTALL}/bin/setenv.sh
+  fi
+}
+
+function processCatalinaConfigurationSettings() {
+  if [ -f "${CONF_INSTALL}/bin/setenv.sh" ]; then
+    sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
+    for (( i=1; ; i++ ))
+    do
+      VAR_CATALINA_CONFIG_PROPERTY="CATALINA_CONFIG_PROPERTY$i"
+      VAR_CATALINA_CONFIG_VALUE="CATALINA_CONFIG_VALUE$i"
+      if [ ! -n "${!VAR_CATALINA_CONFIG_PROPERTY}" ]; then
+        break
+      fi
+      setCatalinaConfigurationProperty ${!VAR_CATALINA_CONFIG_PROPERTY} ${!VAR_CATALINA_CONFIG_VALUE}
+    done
+    echo "export CATALINA_OPTS" >> ${CONF_INSTALL}/bin/setenv.sh
+  fi
+}
+
 if [ -n "${CONFLUENCE_DELAYED_START}" ]; then
   sleep ${CONFLUENCE_DELAYED_START}
 fi
@@ -105,6 +136,8 @@ processContextPath
 
 processConfluenceConfigurationSettings
 
+processCatalinaConfigurationSettings
+
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   processConfluenceLogfileSettings
   relayConfluenceLogFiles
@@ -112,7 +145,7 @@ fi
 
 if [ "$1" = 'confluence' ]; then
   source /usr/bin/dockerwait
-  exec /opt/atlassian/confluence/bin/start-confluence.sh -fg
+  exec ${CONF_INSTALL}/bin/start-confluence.sh -fg
 else
   exec "$@"
 fi

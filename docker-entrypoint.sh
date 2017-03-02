@@ -94,6 +94,7 @@ function processConfluenceConfigurationSettings() {
 }
 
 function processCatalinaDefaultConfiguration() {
+  if [ -f "${CONF_INSTALL}/bin/setenv.sh" ]; then
     sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
     sed -i "/CATALINA_OPTS=/d" ${CONF_INSTALL}/bin/setenv.sh
     echo 'CATALINA_OPTS="-XX:-PrintGCDetails ${CATALINA_OPTS}"
@@ -112,6 +113,7 @@ CATALINA_OPTS="-XX:+UseG1GC ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dorg.apache.tomcat.websocket.DEFAULT_BUFFER_SIZE=32768 ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dconfluence.context.path=${CONFLUENCE_CONTEXT_PATH} ${CATALINA_OPTS}"' >> ${CONF_INSTALL}/bin/setenv.sh
     echo "export CATALINA_OPTS" >> ${CONF_INSTALL}/bin/setenv.sh
+  fi
 }
 
 function setCatalinaConfigurationProperty() {

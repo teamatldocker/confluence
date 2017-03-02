@@ -424,6 +424,32 @@ Build the latest release with docker-compose:
 $ docker-compose build
 ~~~~
 
+# Catalina Webserver Properties
+
+The Catalina webserver properties can be specified using environment variables.
+
+The following environment variables can be used:
+
+* `CATALINA_PARAMETER`: The name of the parameter value. You have to use full parameter flag, its name and assignment operator, e.g. `-Xms`, `-XX:` or `-Dsynchrony.proxy.enabled=`.
+* `CATALINA_PARAMETER_VALUE`: Set the value of the parameter.
+
+Example:
+
+~~~~
+$ docker run -d -p 80:8090 \
+  	-p 8091:8091 --name confluence \
+  	-v confluencedata:/var/atlassian/confluence \
+  	-e "CATALINA_PARAMETER1=-Dsynchrony.proxy.enabled=" \
+  	-e "CATALINA_PARAMETER_VALUE1=true" \
+    -e "CATALINA_PARAMETER2=-Xms" \
+  	-e "CATALINA_PARAMETER_VALUE2=1024m" \
+    -e "CATALINA_PARAMETER3=-Xmx" \
+  	-e "CATALINA_PARAMETER_VALUE3=1024m" \
+  	blacklabelops/confluence:development
+~~~~
+
+> Sets the synchrony proxy and memory settings.
+
 # Container Permissions
 
 Simply: You can set user-id and group-id matching to a user and group from your host machine!
@@ -473,7 +499,10 @@ Example:
 ~~~~
 $ docker run -d -p 80:8090 -p 8091:8091 \
     --name confluence \
-    -e "CATALINA_OPTS=-Xms1g -Xmx2g" \
+    -e "CATALINA_PARAMETER1=-Xms" \
+	  -e "CATALINA_PARAMETER_VALUE1=1024m" \
+    -e "CATALINA_PARAMETER2=-Xmx" \
+	  -e "CATALINA_PARAMETER_VALUE2=2048m" \
     blacklabelops/confluence
 ~~~~
 

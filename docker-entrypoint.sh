@@ -93,15 +93,36 @@ function processConfluenceConfigurationSettings() {
   fi
 }
 
+function processCatalinaDefaultConfiguration() {
+    sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
+    sed -i "/CATALINA_OPTS=/d" ${CONF_INSTALL}/bin/setenv.sh
+    echo 'CATALINA_OPTS="-XX:-PrintGCDetails ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:+PrintGCDateStamps ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:-PrintTenuringDistribution ${CATALINA_OPTS}"
+CATALINA_OPTS="-Xloggc:$LOGBASEABS/logs/gc-`date +%F_%H-%M-%S`.log ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:+UseGCLogFileRotation ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:NumberOfGCLogFiles=5 ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:GCLogFileSize=2M ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:G1ReservePercent=20 ${CATALINA_OPTS}"
+CATALINA_OPTS="-Djava.awt.headless=true ${CATALINA_OPTS}"
+CATALINA_OPTS="-Datlassian.plugins.enable.wait=300 ${CATALINA_OPTS}"
+CATALINA_OPTS="-Xms1024m ${CATALINA_OPTS}"
+CATALINA_OPTS="-Xmx1024m ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:+UseG1GC ${CATALINA_OPTS}"
+CATALINA_OPTS="-Dorg.apache.tomcat.websocket.DEFAULT_BUFFER_SIZE=32768 ${CATALINA_OPTS}"
+CATALINA_OPTS="-Dconfluence.context.path=${CONFLUENCE_CONTEXT_PATH} ${CATALINA_OPTS}"' >> ${CONF_INSTALL}/bin/setenv.sh
+    echo "export CATALINA_OPTS" >> ${CONF_INSTALL}/bin/setenv.sh
+}
+
 function setCatalinaConfigurationProperty() {
   local configurationProperty=$1
   local configurationValue=$2
   local catalinaproperty=""
   if [ -n "${configurationProperty}" ]; then
     sed -i "/${configurationProperty}/d" ${CONF_INSTALL}/bin/setenv.sh
-    catalinaproperty="CATALINA_OPTS=\"-D"${configurationProperty}
+    catalinaproperty="CATALINA_OPTS=\""${configurationProperty}
     if [ -n "${configurationValue}" ]; then
-      catalinaproperty=${catalinaproperty}"="${configurationValue}
+      catalinaproperty=${catalinaproperty}${configurationValue}
     fi
     catalinaproperty=${catalinaproperty}" "'${CATALINA_OPTS}'"\""
     echo ${catalinaproperty} >> ${CONF_INSTALL}/bin/setenv.sh
@@ -113,12 +134,12 @@ function processCatalinaConfigurationSettings() {
     sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
     for (( i=1; ; i++ ))
     do
-      VAR_CATALINA_CONFIG_PROPERTY="CATALINA_CONFIG_PROPERTY$i"
-      VAR_CATALINA_CONFIG_VALUE="CATALINA_CONFIG_VALUE$i"
-      if [ ! -n "${!VAR_CATALINA_CONFIG_PROPERTY}" ]; then
+      VAR_CATALINA_PARAMETER="CATALINA_PARAMETER$i"
+      VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE$i"
+      if [ ! -n "${!VAR_CATALINA_PARAMETER}" ]; then
         break
       fi
-      setCatalinaConfigurationProperty ${!VAR_CATALINA_CONFIG_PROPERTY} ${!VAR_CATALINA_CONFIG_VALUE}
+      setCatalinaConfigurationProperty ${!VAR_CATALINA_PARAMETER} ${!VAR_CATALINA_PARAMETER_VALUE}
     done
     echo "export CATALINA_OPTS" >> ${CONF_INSTALL}/bin/setenv.sh
   fi
@@ -135,6 +156,8 @@ processConfluenceProxySettings
 processContextPath
 
 processConfluenceConfigurationSettings
+
+processCatalinaDefaultConfiguration
 
 processCatalinaConfigurationSettings
 

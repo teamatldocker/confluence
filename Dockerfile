@@ -73,7 +73,7 @@ RUN export CONTAINER_USER=confluence                &&  \
     curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static -o /bin/tini && \
     chmod +x /bin/tini && \
     # Remove obsolete packages and cleanup
-    apk del wget curl && \
+    apk del wget && \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \
     rm -rf /tmp/*                                   &&  \

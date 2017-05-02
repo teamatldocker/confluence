@@ -252,12 +252,9 @@ $ docker run -d \
     --name nginx \
     --network confluence \
     -e "SERVER1SERVER_NAME=confluence.yourhost.com" \
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/synchrony" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8091" \
-    -e "SERVER1REVERSE_PROXY_APPLICATION1=confluence6" \
-    -e "SERVER1REVERSE_PROXY_LOCATION2=/" \
-    -e "SERVER1REVERSE_PROXY_PASS2=http://confluence:8090" \
-    -e "SERVER1REVERSE_PROXY_APPLICATION2=confluence" \
+    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
+    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8090" \
+    -e "SERVER1REVERSE_PROXY_APPLICATION1=confluence" \
     blacklabelops/nginx
 ~~~~
 
@@ -333,12 +330,9 @@ $ docker run -d \
     -p 443:443 \
     --name nginx \
     --network confluence \
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/synchrony" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8091" \
-    -e "SERVER1REVERSE_PROXY_APPLICATION1=confluence6" \
-    -e "SERVER1REVERSE_PROXY_LOCATION2=/" \
-    -e "SERVER1REVERSE_PROXY_PASS2=http://confluence:8090" \
-    -e "SERVER1REVERSE_PROXY_APPLICATION2=confluence" \
+    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
+    -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8090" \
+    -e "SERVER1REVERSE_PROXY_APPLICATION1=confluence" \
     -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=confluence.yourhost.com/L=Springfield/C=US" \
     -e "SERVER1HTTPS_ENABLED=true" \
     -e "SERVER1HTTP_ENABLED=false" \

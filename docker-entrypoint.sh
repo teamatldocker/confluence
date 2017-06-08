@@ -97,7 +97,8 @@ function processCatalinaDefaultConfiguration() {
   if [ -f "${CONF_INSTALL}/bin/setenv.sh" ]; then
     sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
     sed -i "/CATALINA_OPTS=/d" ${CONF_INSTALL}/bin/setenv.sh
-    echo 'CATALINA_OPTS="-XX:-PrintGCDetails ${CATALINA_OPTS}"
+    echo 'CATALINA_OPTS="-Dconfluence.document.conversion.fontpath=/usr/share/fonts/truetype/msttcorefonts ${CATALINA_OPTS}"
+CATALINA_OPTS="-XX:-PrintGCDetails ${CATALINA_OPTS}"
 CATALINA_OPTS="-XX:+PrintGCDateStamps ${CATALINA_OPTS}"
 CATALINA_OPTS="-XX:-PrintTenuringDistribution ${CATALINA_OPTS}"
 CATALINA_OPTS="-Xloggc:$LOGBASEABS/logs/gc-`date +%F_%H-%M-%S`.log ${CATALINA_OPTS}"

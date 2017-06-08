@@ -1,7 +1,7 @@
-FROM blacklabelops/java:jre.8
+FROM blacklabelops/java:server-jre.8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ARG CONFLUENCE_VERSION=6.0.6
+ARG CONFLUENCE_VERSION=6.2.1
 # permissions
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
@@ -35,7 +35,12 @@ RUN export CONTAINER_USER=confluence                &&  \
       curl                                              \
       tar                                               \
       xmlstarlet                                        \
+      msttcorefonts-installer                           \
+      fontconfig                                        \
       wget                                          &&  \
+    # Installing true type fonts
+    update-ms-fonts                                 && \
+    fc-cache -f                                     && \
     # Setting Locale
     /usr/glibc-compat/bin/localedef -i ${LANG_LANGUAGE}_${LANG_COUNTRY} -f UTF-8 ${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8 && \
     # Installing Confluence
@@ -59,7 +64,7 @@ RUN export CONTAINER_USER=confluence                &&  \
       https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar && \
     chown -R confluence:confluence ${CONF_INSTALL} && \
     # Adding letsencrypt-ca to truststore
-    export KEYSTORE=$JAVA_HOME/lib/security/cacerts && \
+    export KEYSTORE=$JAVA_HOME/jre/lib/security/cacerts && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der && \
     wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der && \

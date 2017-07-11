@@ -45,7 +45,7 @@ function processConfluenceProxySettings() {
 
 function processContextPath() {
   if [ -n "${CONFLUENCE_CONTEXT_PATH}" ]; then
-    xmlstarlet ed -P -S -L --update "//Context/@path" --value "${CONFLUENCE_CONTEXT_PATH}" ${CONF_INSTALL}/conf/server.xml
+    xmlstarlet ed -P -S -L --update "//Context[contains(@docBase,'../confluence')]/@path" --value "${CONFLUENCE_CONTEXT_PATH}" ${CONF_INSTALL}/conf/server.xml
   fi
 }
 

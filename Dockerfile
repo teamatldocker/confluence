@@ -9,8 +9,7 @@ ARG CONTAINER_GID=1000
 # Setup useful environment variables
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
-    MYSQL_DRIVER_VERSION=5.1.38 \
-    POSTGRESQL_DRIVER_VERSION=9.4.1212
+    MYSQL_DRIVER_VERSION=5.1.42
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \
@@ -47,9 +46,6 @@ RUN export CONTAINER_USER=confluence                &&  \
       -C /tmp && \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar     \
       ${CONF_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                &&  \
-    rm -f ${CONF_INSTALL}/lib/postgresql-*.jar                                                                &&  \
-    wget -O ${CONF_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                                       \
-      https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar && \
     chown -R confluence:confluence ${CONF_INSTALL} && \
     # Adding letsencrypt-ca to truststore
     export KEYSTORE=$JAVA_HOME/lib/security/cacerts && \

@@ -111,6 +111,8 @@ CATALINA_OPTS="-Datlassian.plugins.enable.wait=300 ${CATALINA_OPTS}"
 CATALINA_OPTS="-Xms1024m ${CATALINA_OPTS}"
 CATALINA_OPTS="-Xmx1024m ${CATALINA_OPTS}"
 CATALINA_OPTS="-XX:+UseG1GC ${CATALINA_OPTS}"
+CATALINA_OPTS="${START_CONFLUENCE_JAVA_OPTS} ${CATALINA_OPTS}"
+CATALINA_OPTS="-Dsynchrony.enable.xhr.fallback=true ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dorg.apache.tomcat.websocket.DEFAULT_BUFFER_SIZE=32768 ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dconfluence.context.path=${CONFLUENCE_CONTEXT_PATH} ${CATALINA_OPTS}"' >> ${CONF_INSTALL}/bin/setenv.sh
     echo "export CATALINA_OPTS" >> ${CONF_INSTALL}/bin/setenv.sh
@@ -133,18 +135,22 @@ function setCatalinaConfigurationProperty() {
 }
 
 function processCatalinaConfigurationSettings() {
-  if [ -f "${CONF_INSTALL}/bin/setenv.sh" ]; then
-    sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
-    for (( i=1; ; i++ ))
-    do
-      VAR_CATALINA_PARAMETER="CATALINA_PARAMETER$i"
-      VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE$i"
-      if [ ! -n "${!VAR_CATALINA_PARAMETER}" ]; then
-        break
-      fi
-      setCatalinaConfigurationProperty ${!VAR_CATALINA_PARAMETER} ${!VAR_CATALINA_PARAMETER_VALUE}
-    done
-    echo "export CATALINA_OPTS" >> ${CONF_INSTALL}/bin/setenv.sh
+  VAR_CATALINA_PARAMETER="CATALINA_PARAMETER$i"
+  VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE$i"
+  if [ ! -n "${!VAR_CATALINA_PARAMETER}" ]; then
+    if [ -f "${CONF_INSTALL}/bin/setenv.sh" ]; then
+      sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
+      for (( i=1; ; i++ ))
+      do
+        VAR_CATALINA_PARAMETER="CATALINA_PARAMETER$i"
+        VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE$i"
+        if [ ! -n "${!VAR_CATALINA_PARAMETER}" ]; then
+          break
+        fi
+        setCatalinaConfigurationProperty ${!VAR_CATALINA_PARAMETER} ${!VAR_CATALINA_PARAMETER_VALUE}
+      done
+      echo "export CATALINA_OPTS" >> ${CONF_INSTALL}/bin/setenv.sh
+    fi
   fi
 }
 
@@ -162,7 +168,9 @@ processConfluenceConfigurationSettings
 
 processCatalinaDefaultConfiguration
 
-processCatalinaConfigurationSettings
+if [ -n "${CATALINA_PARAMETER1}" ]; then
+  processCatalinaConfigurationSettings
+fi
 
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   processConfluenceLogfileSettings

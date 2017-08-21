@@ -1,5 +1,6 @@
 # Dockerized Atlassian Confluence
 
+[![Open Issues](https://img.shields.io/github/issues/blacklabelops/confluence.svg)](https://github.com/blacklabelops/confluence/issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/confluence.svg)](https://github.com/cblacklabelops/confluence/stargazers)
 [![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/)
 
 "One place for all your team's work - Spend less time hunting things down and more time making things happen. Organize your work, create documents, and discuss everything in one place." - [[Source](https://www.atlassian.com/software/confluence)]
@@ -23,7 +24,7 @@ You may also like:
 # Make It Short
 
 ~~~~
-$ docker run -d -p 80:8090 -p 8091:8091 --name confluence blacklabelops/confluence
+$ docker run -d -p 80:8090 --name confluence blacklabelops/confluence
 ~~~~
 
 # Setup
@@ -439,7 +440,7 @@ $ docker run -d -p 80:8090 \
   	-e "CATALINA_PARAMETER_VALUE2=1024m" \
     -e "CATALINA_PARAMETER3=-Xmx" \
   	-e "CATALINA_PARAMETER_VALUE3=1024m" \
-  	blacklabelops/confluence:development
+  	blacklabelops/confluence
 ~~~~
 
 > Sets the synchrony proxy and memory settings.

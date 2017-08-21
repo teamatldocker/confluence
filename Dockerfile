@@ -95,9 +95,9 @@ LABEL com.blacklabelops.application.confluence.version=$CONFLUENCE_VERSION \
 EXPOSE 8090 8091
 
 USER confluence
-VOLUME ["${CONF_HOME}"]
+VOLUME ["/var/atlassian/confluence"]
 # Set the default working directory as the Confluence home directory.
 WORKDIR ${CONF_HOME}
-COPY docker-entrypoint.sh ${CONF_SCRIPT_HOME}/docker-entrypoint.sh
+COPY docker-entrypoint.sh /home/confluence/docker-entrypoint.sh
 ENTRYPOINT ["/sbin/tini","--","/home/confluence/docker-entrypoint.sh"]
 CMD ["confluence"]

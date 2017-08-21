@@ -1,7 +1,7 @@
 FROM blacklabelops/java:server-jre.8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ARG CONFLUENCE_VERSION=6.2.1
+ARG CONFLUENCE_VERSION=6.3.2
 # permissions
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
@@ -14,10 +14,7 @@ ARG LANG_COUNTRY=US
 # Setup useful environment variables
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
-    CONF_SCRIPT_HOME=/home/confluence \
-    MYSQL_DRIVER_VERSION=5.1.40 \
-    POSTGRESQL_DRIVER_VERSION=9.4.1212 \
-    LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
+    MYSQL_DRIVER_VERSION=5.1.42
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \
@@ -59,9 +56,6 @@ RUN export CONTAINER_USER=confluence                &&  \
       -C /tmp && \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar     \
       ${CONF_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                &&  \
-    rm -f ${CONF_INSTALL}/lib/postgresql-*.jar                                                                &&  \
-    wget -O ${CONF_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                                       \
-      https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar && \
     chown -R confluence:confluence ${CONF_INSTALL} && \
     # Adding letsencrypt-ca to truststore
     export KEYSTORE=$JAVA_HOME/jre/lib/security/cacerts && \
@@ -81,7 +75,7 @@ RUN export CONTAINER_USER=confluence                &&  \
     wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
     # Remove obsolete packages and cleanup
-    apk del wget curl && \
+    apk del wget && \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \
     rm -rf /tmp/*                                   &&  \

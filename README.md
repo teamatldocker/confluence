@@ -56,7 +56,7 @@ Secondly start Confluence with a link to postgres:
 ~~~~
 $ docker run -d --name confluence \
 	  --network confluencenet \
-	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
+	  -p 80:8090 blacklabelops/confluence
 ~~~~
 
 >  Start the Confluence and link it to the postgresql instance.
@@ -135,7 +135,7 @@ Now start the Confluence container and let it use the container. On first startu
 ~~~~
 $ docker run -d --name confluence \
 	  --network confluencenet \
-	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
+	  -p 80:8090 blacklabelops/confluence
 ~~~~
 
 >  Start the Confluence and link it to the postgresql instance.
@@ -189,7 +189,7 @@ Now start the Confluence container and let it use the container. On first startu
 ~~~~
 $ docker run -d --name confluence \
 	  --network confluencenet \
-	  -p 80:8090 -p 8091:8091 blacklabelops/confluence
+	  -p 80:8090 blacklabelops/confluence
 ~~~~
 
 >  Start Confluence
@@ -216,7 +216,7 @@ First start the polling container:
 $ docker run -d --name confluence \
     -e "DOCKER_WAIT_HOST=your_postgres_host" \
     -e "DOCKER_WAIT_PORT=5432" \
-    -p 80:8090 -p 8091:8091 blacklabelops/confluence
+    -p 80:8090 blacklabelops/confluence
 ~~~~
 
 > Waits at most 60 seconds for the database.
@@ -238,7 +238,7 @@ Example:
 * Adding property `confluence.webapp.context.path` to `/confluence`
 
 ~~~~
-$ docker run -d -p 80:8090 -p 8091:8091 \
+$ docker run -d -p 80:8090 \
     --name confluence \
     -e "CONFLUENCE_CONFIG_PROPERTY1=synchrony.btf" \
     -e "CONFLUENCE_CONFIG_VALUE1=true" \
@@ -432,7 +432,7 @@ Example:
 
 ~~~~
 $ docker run -d -p 80:8090 \
-  	-p 8091:8091 --name confluence \
+  	--name confluence \
   	-v confluencedata:/var/atlassian/confluence \
   	-e "CATALINA_PARAMETER1=-Dsynchrony.proxy.enabled=" \
   	-e "CATALINA_PARAMETER_VALUE1=true" \
@@ -492,7 +492,7 @@ You should give at least 1-2GB more than the JVM maximum memory setting to your 
 Example:
 
 ~~~~
-$ docker run -d -p 80:8090 -p 8091:8091 \
+$ docker run -d -p 80:8090 \
     --name confluence \
     -e "CATALINA_PARAMETER1=-Xms" \
 	  -e "CATALINA_PARAMETER_VALUE1=1024m" \

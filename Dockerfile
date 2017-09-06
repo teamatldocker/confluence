@@ -1,7 +1,7 @@
 FROM blacklabelops/java:server-jre.8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ARG CONFLUENCE_VERSION=6.3.3
+ARG CONFLUENCE_VERSION=6.4.0
 # permissions
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
@@ -14,7 +14,7 @@ ARG LANG_COUNTRY=US
 # Setup useful environment variables
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
-    MYSQL_DRIVER_VERSION=5.1.42
+    MYSQL_DRIVER_VERSION=5.1.44
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                &&  \

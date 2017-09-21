@@ -34,6 +34,7 @@ RUN export CONTAINER_USER=confluence                &&  \
       xmlstarlet                                        \
       msttcorefonts-installer                           \
       fontconfig                                        \
+      graphviz                                          \
       wget                                          &&  \
     # Installing true type fonts
     update-ms-fonts                                 && \

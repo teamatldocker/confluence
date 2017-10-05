@@ -33,8 +33,11 @@ RUN export CONTAINER_USER=confluence                &&  \
       tar                                               \
       xmlstarlet                                        \
       msttcorefonts-installer                           \
+      ttf-dejavu					\
       fontconfig                                        \
+      ghostscript					\
       graphviz                                          \
+      motif						\
       wget                                          &&  \
     # Installing true type fonts
     update-ms-fonts                                 && \

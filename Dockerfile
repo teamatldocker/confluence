@@ -92,7 +92,6 @@ LABEL com.blacklabelops.application.confluence.version=$CONFLUENCE_VERSION \
       com.blacklabelops.application.confluence.userid=$CONTAINER_UID \
       com.blacklabelops.application.confluence.groupid=$CONTAINER_GID \
       com.blacklabelops.application.version.jdbc-mysql=$MYSQL_DRIVER_VERSION \
-      com.blacklabelops.application.version.jdbc-postgres=$POSTGRESQL_DRIVER_VERSION \
       com.blacklabelops.image.builddate.confluence=${BUILD_DATE}
 
 # Expose default HTTP connector port.

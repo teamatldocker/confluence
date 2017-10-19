@@ -1,7 +1,7 @@
 FROM blacklabelops/java:server-jre.8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ARG CONFLUENCE_VERSION=6.4.1
+ARG CONFLUENCE_VERSION=6.4.2
 # permissions
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
@@ -92,7 +92,6 @@ LABEL com.blacklabelops.application.confluence.version=$CONFLUENCE_VERSION \
       com.blacklabelops.application.confluence.userid=$CONTAINER_UID \
       com.blacklabelops.application.confluence.groupid=$CONTAINER_GID \
       com.blacklabelops.application.version.jdbc-mysql=$MYSQL_DRIVER_VERSION \
-      com.blacklabelops.application.version.jdbc-postgres=$POSTGRESQL_DRIVER_VERSION \
       com.blacklabelops.image.builddate.confluence=${BUILD_DATE}
 
 # Expose default HTTP connector port.

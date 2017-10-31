@@ -172,10 +172,6 @@ if [ -n "${CATALINA_PARAMETER1}" ]; then
   processCatalinaDefaultConfiguration
 fi
 
-if [ -n "${CATALINA_PARAMETER1}" ]; then
-  processCatalinaConfigurationSettings
-fi
-
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   processConfluenceLogfileSettings
   relayConfluenceLogFiles

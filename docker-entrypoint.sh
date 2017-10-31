@@ -80,12 +80,13 @@ function setConfluenceConfigurationProperty() {
 }
 
 function processConfluenceConfigurationSettings() {
+  local counter=1
   if [ -f "${CONF_HOME}/confluence.cfg.xml" ]; then
-    for (( i=1; ; i++ ))
+    for (( counter=1; ; counter++ ))
     do
-      VAR_CONFLUENCE_CONFIG_PROPERTY="CONFLUENCE_CONFIG_PROPERTY$i"
-      VAR_CONFLUENCE_CONFIG_VALUE="CONFLUENCE_CONFIG_VALUE$i"
-      if [ ! -n "${!VAR_CONFLUENCE_CONFIG_PROPERTY}" ]; then
+      VAR_CONFLUENCE_CONFIG_PROPERTY="CONFLUENCE_CONFIG_PROPERTY$counter"
+      VAR_CONFLUENCE_CONFIG_VALUE="CONFLUENCE_CONFIG_VALUE$counter"
+      if [ -z "${!VAR_CONFLUENCE_CONFIG_PROPERTY}" ]; then
         break
       fi
       setConfluenceConfigurationProperty ${!VAR_CONFLUENCE_CONFIG_PROPERTY} ${!VAR_CONFLUENCE_CONFIG_VALUE}
@@ -135,16 +136,17 @@ function setCatalinaConfigurationProperty() {
 }
 
 function processCatalinaConfigurationSettings() {
-  VAR_CATALINA_PARAMETER="CATALINA_PARAMETER$i"
-  VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE$i"
-  if [ ! -n "${!VAR_CATALINA_PARAMETER}" ]; then
+  local counter=1
+  local VAR_CATALINA_PARAMETER="CATALINA_PARAMETER1"
+  local VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE1"
+  if [ -n "${!VAR_CATALINA_PARAMETER}" ]; then
     if [ -f "${CONF_INSTALL}/bin/setenv.sh" ]; then
       sed -i "/export CATALINA_OPTS/d" ${CONF_INSTALL}/bin/setenv.sh
-      for (( i=1; ; i++ ))
+      for (( counter=1; ; counter++ ))
       do
-        VAR_CATALINA_PARAMETER="CATALINA_PARAMETER$i"
-        VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE$i"
-        if [ ! -n "${!VAR_CATALINA_PARAMETER}" ]; then
+        VAR_CATALINA_PARAMETER="CATALINA_PARAMETER$counter"
+        VAR_CATALINA_PARAMETER_VALUE="CATALINA_PARAMETER_VALUE$counter"
+        if [ -z "${!VAR_CATALINA_PARAMETER}" ]; then
           break
         fi
         setCatalinaConfigurationProperty ${!VAR_CATALINA_PARAMETER} ${!VAR_CATALINA_PARAMETER_VALUE}
@@ -166,7 +168,9 @@ processContextPath
 
 processConfluenceConfigurationSettings
 
-processCatalinaDefaultConfiguration
+if [ -n "${CATALINA_PARAMETER1}" ]; then
+  processCatalinaDefaultConfiguration
+fi
 
 if [ -n "${CATALINA_PARAMETER1}" ]; then
   processCatalinaConfigurationSettings

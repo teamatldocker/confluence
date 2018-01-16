@@ -6,6 +6,42 @@
 # If CMD argument is overriden and not 'confluence', then the user wants to run
 # his own process.
 
+
+SERAPH_CONFIG_FILE="/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml"
+
+#
+# Enable crowd sso authenticator java class in image config file
+#
+function enableCrowdSSO() {
+  xmlstarlet ed -P -S -L --delete "//authenticator" $SERAPH_CONFIG_FILE
+  xmlstarlet ed -P -S -L -s "//security-config" --type elem -n authenticator -i "//authenticator[not(@class)]" -t attr -n class -v "com.atlassian.confluence.user.ConfluenceCrowdSSOAuthenticator" $SERAPH_CONFIG_FILE
+}
+
+#
+# Enable confluence authenticator java class in image config file
+#
+function enableConfluenceAuth() {
+  xmlstarlet ed -P -S -L --delete "//authenticator" $SERAPH_CONFIG_FILE
+  xmlstarlet ed -P -S -L -s "//security-config" --type elem -n authenticator -i "//authenticator[not(@class)]" -t attr -n class -v "com.atlassian.confluence.user.ConfluenceAuthenticator" $SERAPH_CONFIG_FILE
+}
+
+#
+# Will either enable, disable Crowd SSO support or ignore current setting at all
+#
+function controlCrowdSSO() {
+  local setting=$1
+  case "$setting" in
+    true)
+      enableCrowdSSO
+    ;;
+    false)
+      enableConfluenceAuth
+    ;;
+    *)
+      echo "Crowd SSO settings ingored because of setting ${setting}"
+    esac
+}
+
 function createConfluenceTempDirectory() {
   CONFLUENCE_CATALINA_TMPDIR=${CONF_HOME}/temp
 
@@ -179,6 +215,10 @@ fi
 if [ -n "${CONFLUENCE_LOGFILE_LOCATION}" ]; then
   processConfluenceLogfileSettings
   relayConfluenceLogFiles
+fi
+
+if [ -n "${CONFLUENCE_CROWD_SSO}" ]; then
+  controlCrowdSSO ${CONFLUENCE_CROWD_SSO}
 fi
 
 if [ "$1" = 'confluence' ]; then

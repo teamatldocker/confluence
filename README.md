@@ -513,6 +513,31 @@ $ docker inspect --format='{{json .Config.Labels}}' blacklabelops/confluence
 
 > Displays image metadata, e.g. image build date.
 
+
+# Confluence SSO With Crowd
+
+You enable Single Sign On with Atlassian Crowd. What is crowd?
+
+"Users can come from anywhere: Active Directory, LDAP, Crowd itself, or any mix thereof. Control permissions to all your applications in one place – Atlassian, Subversion, Google Apps, or your own apps." - [Atlassian Crowd](https://www.atlassian.com/software/crowd/overview)
+
+This is controlled by the environment variable `CONFLUENCE_CROWD_SSO`. Possible values:
+
+* `true`: Confluence configuration will be set to Crowd SSO authentication class at every restart.
+* `false`: Confluence configuration will be set to Confluence Authentication class at every restart.
+* `ignore` (Default): Config will not be touched, current image setting will be taken.
+
+
+Example:
+
+~~~~
+$ docker run -d -p 80:8080 -v confluencevolume:/var/atlassian/confluence \
+    -e "CONFLUENCE_CROWD_SSO=true" \
+    --name confluence blacklabelops/confluence
+~~~~
+
+ > SSO will be activated, you will need Crowd in order to authenticate.
+
+
 # Support & Feature Requests
 
 Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)

@@ -201,7 +201,7 @@ $ docker run -d --name confluence \
 The confluence container can wait for the database container to start up. You have to specify the
 host and port of your database container and Confluence will wait up to one minute for the database.
 
-You can define a the waiting parameters with the enviromnemt variables:
+You can define the waiting parameters with the environment variables:
 
 * `DOCKER_WAIT_HOST`: The host to poll. Mandatory!
 * `DOCKER_WAIT_PORT`: The port to poll Mandatory!
@@ -220,6 +220,23 @@ $ docker run -d --name confluence \
 ~~~~
 
 > Waits at most 60 seconds for the database.
+
+Start the database within 60 seconds:
+
+~~~~
+$ docker run --name postgres -d \
+    --network jiranet \
+    -v postgresvolume:/var/lib/postgresql \
+    -e 'POSTGRES_USER=jira' \
+    -e 'POSTGRES_PASSWORD=jellyfish' \
+    -e 'POSTGRES_DB=jiradb' \
+    -e 'POSTGRES_ENCODING=UNICODE' \
+    -e 'POSTGRES_COLLATE=C' \
+    -e 'POSTGRES_COLLATE_TYPE=C' \
+    blacklabelops/postgres
+~~~~
+
+> Confluence will start after postgres is available!
 
 # Confluence Configuration Properties
 

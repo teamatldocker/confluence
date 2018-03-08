@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # A helper script for ENTRYPOINT.
 #
@@ -6,8 +6,20 @@
 # If CMD argument is overriden and not 'confluence', then the user wants to run
 # his own process.
 
+set -o errexit
+
+[[ ${DEBUG} == true ]] && set -x
 
 SERAPH_CONFIG_FILE="/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml"
+CROWD_PROPERTIES_FILE="/opt/atlassian/confluence/confluence/WEB-INF/classes/crowd.properties"
+
+function updateProperties() {
+  local propertyfile=$1
+  local propertyname=$2
+  local propertyvalue=$3
+  sed -i "/${propertyname}/d" ${propertyfile}
+  echo "${propertyname}=${propertyvalue}" >> ${propertyfile}
+}
 
 #
 # Enable crowd sso authenticator java class in image config file
@@ -15,6 +27,24 @@ SERAPH_CONFIG_FILE="/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-
 function enableCrowdSSO() {
   xmlstarlet ed -P -S -L --delete "//authenticator" $SERAPH_CONFIG_FILE
   xmlstarlet ed -P -S -L -s "//security-config" --type elem -n authenticator -i "//authenticator[not(@class)]" -t attr -n class -v "com.atlassian.confluence.user.ConfluenceCrowdSSOAuthenticator" $SERAPH_CONFIG_FILE
+  if [ -f "${CROWD_PROPERTIES_FILE}" ]; then
+    rm -f ${CROWD_PROPERTIES_FILE}
+    touch ${CROWD_PROPERTIES_FILE}
+  fi
+  if [ -n "${CROWD_SSO_APPLICATION_NAME}" ]; then
+    updateProperties ${CROWD_PROPERTIES_FILE} "application.name" ${CROWD_SSO_APPLICATION_NAME}
+  fi
+  if [ -n "${CROWD_SSO_APPLICATION_PASSWORD}" ]; then
+    updateProperties ${CROWD_PROPERTIES_FILE} "application.password" ${CROWD_SSO_APPLICATION_PASSWORD}
+  fi
+  if [ -n "${CROWD_SSO_BASE_URL}" ]; then
+    updateProperties ${CROWD_PROPERTIES_FILE} "crowd.base.url" ${CROWD_SSO_BASE_URL}
+  fi
+  if [ -n "${CROWD_SSO_SESSION_VALIDATION}" ]; then
+    updateProperties ${CROWD_PROPERTIES_FILE} "session.validationinterval" ${CROWD_SSO_SESSION_VALIDATION}
+  else
+    updateProperties ${CROWD_PROPERTIES_FILE} "session.validationinterval" "2"
+  fi
 }
 
 #

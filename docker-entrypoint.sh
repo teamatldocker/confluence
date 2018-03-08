@@ -39,12 +39,18 @@ function enableCrowdSSO() {
   fi
   if [ -n "${CROWD_SSO_BASE_URL}" ]; then
     updateProperties ${CROWD_PROPERTIES_FILE} "crowd.base.url" ${CROWD_SSO_BASE_URL}
+    updateProperties ${CROWD_PROPERTIES_FILE} "crowd.server.url" "${CROWD_SSO_BASE_URL}services/"
   fi
   if [ -n "${CROWD_SSO_SESSION_VALIDATION}" ]; then
     updateProperties ${CROWD_PROPERTIES_FILE} "session.validationinterval" ${CROWD_SSO_SESSION_VALIDATION}
   else
     updateProperties ${CROWD_PROPERTIES_FILE} "session.validationinterval" "2"
   fi
+  echo 'application.login.url
+session.isauthenticated=session.isauthenticated
+session.tokenkey=session.tokenkey
+session.lastvalidation=session.lastvalidation
+  ' >> ${CROWD_PROPERTIES_FILE}
 }
 
 #

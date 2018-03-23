@@ -543,12 +543,24 @@ This is controlled by the environment variable `CONFLUENCE_CROWD_SSO`. Possible 
 * `false`: Confluence configuration will be set to Confluence Authentication class at every restart.
 * `ignore` (Default): Config will not be touched, current image setting will be taken.
 
+You need to configure an application user between confluence and crowd, see here: [Integrating Crowd with Atlassian Confluence](https://confluence.atlassian.com/crowd/integrating-crowd-with-atlassian-confluence-198573.html)
+
+Crowd SSO needs the following environment variables:
+
+`CROWD_SSO_APPLICATION_NAME`: The application username.
+`CROWD_SSO_APPLICATION_PASSWORD`: The application user's password.
+`CROWD_SSO_BASE_URL`: The base url of your crowd instance, e.g. `https://yourcrowd.yourhost.com/`
+`CROWD_SSO_SESSION_VALIDATION`: Timeout for the validation token in minutes.
 
 Example:
 
 ~~~~
 $ docker run -d -p 80:8080 -v confluencevolume:/var/atlassian/confluence \
     -e "CONFLUENCE_CROWD_SSO=true" \
+    -e "CROWD_SSO_APPLICATION_NAME=confluence_user" \
+    -e "CROWD_SSO_APPLICATION_PASSWORD=your_secure_password" \
+    -e "CROWD_SSO_BASE_URL=https://yourcrowd.yourhost.com/" \
+    -e "CROWD_SSO_SESSION_VALIDATION=10" \
     --name confluence blacklabelops/confluence
 ~~~~
 

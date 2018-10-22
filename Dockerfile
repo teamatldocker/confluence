@@ -1,4 +1,4 @@
-FROM blacklabelops/java:server-jre.8
+FROM blacklabelops/java:server-jre.8.162
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
 ARG CONFLUENCE_VERSION=6.12.0

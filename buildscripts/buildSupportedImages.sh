@@ -10,5 +10,5 @@ source $CUR_DIR/release.sh
 
 readonly BUILD_VERSION=$CONFLUENCE_VERSION
 
-source $CUR_DIR/buildImage.sh $BUILD_VERSION latest Dockerfile en US
-source $CUR_DIR/buildImage.sh $BUILD_VERSION $BUILD_VERSION Dockerfile en US
+source $CUR_DIR/buildImage.sh $BUILD_VERSION latest en US
+source $CUR_DIR/buildImage.sh $BUILD_VERSION $BUILD_VERSION en US

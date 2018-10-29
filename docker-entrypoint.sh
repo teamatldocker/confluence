@@ -32,13 +32,13 @@ function enableCrowdSSO() {
     touch ${CROWD_PROPERTIES_FILE}
   fi
   if [ -n "${CROWD_SSO_APPLICATION_NAME}" ]; then
-    updateProperties ${CROWD_PROPERTIES_FILE} "application.name" ${CROWD_SSO_APPLICATION_NAME}
+    updateProperties ${CROWD_PROPERTIES_FILE} "application.name" "${CROWD_SSO_APPLICATION_NAME}"
   fi
   if [ -n "${CROWD_SSO_APPLICATION_PASSWORD}" ]; then
-    updateProperties ${CROWD_PROPERTIES_FILE} "application.password" ${CROWD_SSO_APPLICATION_PASSWORD}
+    updateProperties ${CROWD_PROPERTIES_FILE} "application.password" "${CROWD_SSO_APPLICATION_PASSWORD}"
   fi
   if [ -n "${CROWD_SSO_BASE_URL}" ]; then
-    updateProperties ${CROWD_PROPERTIES_FILE} "crowd.base.url" ${CROWD_SSO_BASE_URL}
+    updateProperties ${CROWD_PROPERTIES_FILE} "crowd.base.url" "${CROWD_SSO_BASE_URL}"
     updateProperties ${CROWD_PROPERTIES_FILE} "crowd.server.url" "${CROWD_SSO_BASE_URL}services/"
   fi
   if [ -n "${CROWD_SSO_SESSION_VALIDATION}" ]; then

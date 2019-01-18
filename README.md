@@ -566,11 +566,6 @@ $ docker run -d -p 80:8080 -v confluencevolume:/var/atlassian/confluence \
 
  > SSO will be activated, you will need Crowd in order to authenticate.
 
-
-# Support & Feature Requests
-
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
-
 # Credits
 
 This project is very grateful for code and examples from the repositories:

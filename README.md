@@ -1,8 +1,5 @@
 # Dockerized Atlassian Confluence
 
-[![Open Issues](https://img.shields.io/github/issues/blacklabelops/confluence.svg)](https://github.com/blacklabelops/confluence/issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/confluence.svg)](https://github.com/cblacklabelops/confluence/stargazers)
-[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/)
-
 "One place for all your team's work - Spend less time hunting things down and more time making things happen. Organize your work, create documents, and discuss everything in one place." - [[Source](https://www.atlassian.com/software/confluence)]
 
 # Supported Tags And Respective Dockerfile Links

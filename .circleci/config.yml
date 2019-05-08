@@ -14,6 +14,7 @@ jobs:
               py-pip \
               curl \
               curl-dev
+            pip install --upgrade pip
             pip install \
               docker-compose
       - run:

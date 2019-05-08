@@ -14,9 +14,6 @@ jobs:
               py-pip \
               curl \
               curl-dev
-            pip install --upgrade pip
-            pip install \
-              docker-compose
       - run:
           name: Build Branch Images
           command: |
@@ -41,9 +38,6 @@ jobs:
               py-pip \
               curl \
               curl-dev
-            pip install --upgrade pip
-            pip install \
-              docker-compose
       - run:
           name: Build Docker Release Images
           command: |

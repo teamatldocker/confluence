@@ -13,9 +13,10 @@ readonly PUSH_VERSION=$CONFLUENCE_VERSION
 
 function pushImage() {
   local tagname=$1
+  local repository=$2
 
-  docker push blacklabelops/confluence:$tagname
+  docker push $repository/confluence:$tagname
 }
 
-pushImage latest
-pushImage $PUSH_VERSION
+pushImage latest $PUSH_REPOSITORY
+pushImage $PUSH_VERSION $PUSH_REPOSITORY

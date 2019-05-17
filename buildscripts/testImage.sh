@@ -5,8 +5,8 @@ set -o errexit    # abort script at first error
 function testImage() {
   local tagname=$1
   local iteration=0
-  docker run -d --network confluence_dockertestnet --name=confluence.$tagname blacklabelops/confluence:$tagname
-  while ! docker run --rm --network confluence_dockertestnet blacklabelops/jenkins-swarm curl http://confluence.$tagname:8090
+  docker run -d --network confluence_dockertestnet --name=confluence.$tagname teamatldocker/confluence:$tagname
+  while ! docker run --rm --network confluence_dockertestnet tutum/curl curl http://confluence.$tagname:8090
   do
       { echo "Exit status of curl (${iteration}): $?"
         echo "Retrying ..."

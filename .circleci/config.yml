@@ -51,7 +51,9 @@ jobs:
           name: Push Dockerhub Release Images
           command: |
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              sh buildscripts/releaseSupportedImages.sh
+              sh buildscripts/releaseSupportedImages.sh teamatldocker
+              sh buildscripts/retagSupportedImages.sh blacklabelops
+              sh buildscripts/releaseSupportedImages.sh blacklabelops
 
 workflows:
   version: 2

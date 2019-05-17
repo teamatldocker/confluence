@@ -7,7 +7,7 @@ function buildImage() {
   local tagname=$2
   local language=$3
   local country=$4
-  docker build --no-cache -t blacklabelops/confluence:$tagname --build-arg CONFLUENCE_VERSION=$version --build-arg LANG_LANGUAGE=$language --build-arg LANG_COUNTRY=$country --build-arg BUILD_DATE=$(date +"%d/%m/%y-%T%z") -f Dockerfile .
+  docker build --no-cache -t teamatldocker/confluence:$tagname --build-arg CONFLUENCE_VERSION=$version --build-arg LANG_LANGUAGE=$language --build-arg LANG_COUNTRY=$country --build-arg BUILD_DATE=$(date +"%d/%m/%y-%T%z") -f Dockerfile .
 }
 
 buildImage $1 $2 $3 $4

@@ -1,15 +1,12 @@
 # Dockerized Atlassian Confluence
 
-[![Open Issues](https://img.shields.io/github/issues/blacklabelops/confluence.svg)](https://github.com/blacklabelops/confluence/issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/confluence.svg)](https://github.com/cblacklabelops/confluence/stargazers)
-[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/confluence.svg)](https://hub.docker.com/r/blacklabelops/confluence/)
-
 "One place for all your team's work - Spend less time hunting things down and more time making things happen. Organize your work, create documents, and discuss everything in one place." - [[Source](https://www.atlassian.com/software/confluence)]
 
 # Supported Tags And Respective Dockerfile Links
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 6.10.1 | 6.10.1, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
+| Confluence | 6.13.4 | 6.13.4, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
 
 # Related Images
 
@@ -565,11 +562,6 @@ $ docker run -d -p 80:8080 -v confluencevolume:/var/atlassian/confluence \
 ~~~~
 
  > SSO will be activated, you will need Crowd in order to authenticate.
-
-
-# Support & Feature Requests
-
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
 
 # Credits
 

@@ -2,7 +2,7 @@ version: '2'
 
 services:
   confluence:
-    image: blacklabelops/confluence
+    image: teamatldocker/confluence
     container_name: confluence
     hostname: confluence
     networks:

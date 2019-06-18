@@ -6,22 +6,22 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 6.13.4 | 6.13.4, latest | [Dockerfile](https://github.com/blacklabelops/confluence/blob/master/Dockerfile) |
+| Confluence | 6.13.4 | 6.13.4, latest | [Dockerfile](https://github.com/teamatldocker/confluence/blob/master/Dockerfile) |
 
 # Related Images
 
 You may also like:
 
-* [blacklabelops/jira](https://github.com/blacklabelops/jira): The #1 software development tool used by agile teams
-* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
-* [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
-* [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
+* [teamatldocker/jira](https://github.com/teamatldocker/jira): The #1 software development tool used by agile teams
+* [teamatldocker/confluence](https://github.com/teamatldocker/confluence): Create, organize, and discuss work with your team
+* [teamatldocker/bitbucket](https://github.com/teamatldocker/bitbucket): Code, Manage, Collaborate
+* [teamatldocker/crowd](https://github.com/teamatldocker/crowd): Identity management for web apps
 * [blacklabelops/crucible](https://github.com/blacklabelops/crucible): Source Code Review
 
 # Make It Short
 
 ~~~~
-$ docker run -d -p 80:8090 --name confluence blacklabelops/confluence
+$ docker run -d -p 80:8090 --name confluence teamatldocker/confluence
 ~~~~
 
 # Setup
@@ -53,7 +53,7 @@ Secondly start Confluence with a link to postgres:
 ~~~~
 $ docker run -d --name confluence \
 	  --network confluencenet \
-	  -p 80:8090 blacklabelops/confluence
+	  -p 80:8090 teamatldocker/confluence
 ~~~~
 
 >  Start the Confluence and link it to the postgresql instance.
@@ -132,7 +132,7 @@ Now start the Confluence container and let it use the container. On first startu
 ~~~~
 $ docker run -d --name confluence \
 	  --network confluencenet \
-	  -p 80:8090 blacklabelops/confluence
+	  -p 80:8090 teamatldocker/confluence
 ~~~~
 
 >  Start the Confluence and link it to the postgresql instance.
@@ -186,7 +186,7 @@ Now start the Confluence container and let it use the container. On first startu
 ~~~~
 $ docker run -d --name confluence \
 	  --network confluencenet \
-	  -p 80:8090 blacklabelops/confluence
+	  -p 80:8090 teamatldocker/confluence
 ~~~~
 
 >  Start Confluence
@@ -213,7 +213,7 @@ First start the polling container:
 $ docker run -d --name confluence \
     -e "DOCKER_WAIT_HOST=your_postgres_host" \
     -e "DOCKER_WAIT_PORT=5432" \
-    -p 80:8090 blacklabelops/confluence
+    -p 80:8090 teamatldocker/confluence
 ~~~~
 
 > Waits at most 60 seconds for the database.
@@ -258,7 +258,7 @@ $ docker run -d -p 80:8090 \
     -e "CONFLUENCE_CONFIG_VALUE1=true" \
     -e "CONFLUENCE_CONFIG_PROPERTY2=confluence.webapp.context.path" \
     -e "CONFLUENCE_CONFIG_VALUE2=/confluence" \
-    blacklabelops/confluence
+    teamatldocker/confluence
 ~~~~
 
 > Each environment variable must be enumerated with a postfix number, starting with 1!
@@ -287,7 +287,7 @@ $ docker run -d --name confluence \
     -e "CONFLUENCE_PROXY_NAME=myhost.example.com" \
     -e "CONFLUENCE_PROXY_PORT=443" \
     -e "CONFLUENCE_PROXY_SCHEME=https" \
-    blacklabelops/confluence
+    teamatldocker/confluence
 ~~~~
 
 > Will set the values inside the server.xml in /opt/confluence/conf/server.xml
@@ -320,7 +320,7 @@ $ docker run -d --name confluence \
     -e "CONFLUENCE_PROXY_NAME=confluence.yourhost.com" \
     -e "CONFLUENCE_PROXY_PORT=80" \
     -e "CONFLUENCE_PROXY_SCHEME=http" \
-    blacklabelops/confluence
+    teamatldocker/confluence
 ~~~~
 
 Then start NGINX:
@@ -367,7 +367,7 @@ $ docker run -d --name confluence \
     -e "CONFLUENCE_PROXY_NAME=confluence.yourhost.com" \
     -e "CONFLUENCE_PROXY_PORT=443" \
     -e "CONFLUENCE_PROXY_SCHEME=https" \
-    blacklabelops/confluence
+    teamatldocker/confluence
 ~~~~
 
 Then start NGINX:
@@ -399,7 +399,7 @@ Examples:
 Build image with the default Confluence release:
 
 ~~~~
-$ docker build -t blacklabelops/confluence .
+$ docker build -t teamatldocker/confluence .
 ~~~~
 
 > Note: Dockerfile must be inside the current directory!
@@ -407,7 +407,7 @@ $ docker build -t blacklabelops/confluence .
 Build image with a specific Confluence release:
 
 ~~~~
-$ docker build --build-arg CONFLUENCE_VERSION=6.0.2  -t blacklabelops/confluence .
+$ docker build --build-arg CONFLUENCE_VERSION=6.0.2  -t teamatldocker/confluence .
 ~~~~
 
 > Note: Dockerfile must be inside the current directory!
@@ -454,7 +454,7 @@ $ docker run -d -p 80:8090 \
   	-e "CATALINA_PARAMETER_VALUE2=1024m" \
     -e "CATALINA_PARAMETER3=-Xmx" \
   	-e "CATALINA_PARAMETER_VALUE3=1024m" \
-  	blacklabelops/confluence
+  	teamatldocker/confluence
 ~~~~
 
 > Sets the synchrony proxy and memory settings.
@@ -475,7 +475,7 @@ The following build arguments can be used:
 Example:
 
 ~~~~
-$ docker build --build-arg CONTAINER_UID=2000 --build-arg CONTAINER_GID=2000 -t blacklabelops/confluence .
+$ docker build --build-arg CONTAINER_UID=2000 --build-arg CONTAINER_GID=2000 -t teamatldocker/confluence .
 ~~~~
 
 > The container will write and read files with UID 2000 and GID 2000.
@@ -493,7 +493,7 @@ The following build arguments can be used:
 Example:
 
 ~~~~
-$ docker build --build-arg LANG_LANGUAGE=de --build-arg LANG_COUNTRY=DE -t blacklabelops/confluence .
+$ docker build --build-arg LANG_LANGUAGE=de --build-arg LANG_COUNTRY=DE -t teamatldocker/confluence .
 ~~~~
 
 > Builds image for german language and country code. E.g. when `Ö` is not displayed correctly inside Confluence.
@@ -512,7 +512,7 @@ $ docker run -d -p 80:8090 \
 	  -e "CATALINA_PARAMETER_VALUE1=1024m" \
     -e "CATALINA_PARAMETER2=-Xmx" \
 	  -e "CATALINA_PARAMETER_VALUE2=2048m" \
-    blacklabelops/confluence
+    teamatldocker/confluence
 ~~~~
 
 > CATALINA_OPTS sets webserver startup properties.
@@ -522,7 +522,7 @@ $ docker run -d -p 80:8090 \
 You can inspect image metadata with the following command:
 
 ~~~~
-$ docker inspect --format='{{json .Config.Labels}}' blacklabelops/confluence
+$ docker inspect --format='{{json .Config.Labels}}' teamatldocker/confluence
 ~~~~
 
 > Displays image metadata, e.g. image build date.
@@ -558,7 +558,7 @@ $ docker run -d -p 80:8080 -v confluencevolume:/var/atlassian/confluence \
     -e "CROWD_SSO_APPLICATION_PASSWORD=your_secure_password" \
     -e "CROWD_SSO_BASE_URL=https://yourcrowd.yourhost.com/" \
     -e "CROWD_SSO_SESSION_VALIDATION=10" \
-    --name confluence blacklabelops/confluence
+    --name confluence teamatldocker/confluence
 ~~~~
 
  > SSO will be activated, you will need Crowd in order to authenticate.

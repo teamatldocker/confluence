@@ -16,7 +16,7 @@ You may also like:
 * [teamatldocker/confluence](https://github.com/teamatldocker/confluence): Create, organize, and discuss work with your team
 * [teamatldocker/bitbucket](https://github.com/teamatldocker/bitbucket): Code, Manage, Collaborate
 * [teamatldocker/crowd](https://github.com/teamatldocker/crowd): Identity management for web apps
-* [blacklabelops/crucible](https://github.com/blacklabelops/crucible): Source Code Review
+* [blacklabelops-legacy/crucible](https://github.com/blacklabelops-legacy/crucible): Source Code Review
 
 # Make It Short
 
@@ -343,7 +343,7 @@ $ docker run -d \
 
 This is an example on running Atlassian Confluence behind NGINX with 2 Docker commands!
 
-Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [blacklabelops/nginx](https://github.com/blacklabelops/nginx)
+Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [blacklabelops-legacy/nginx](https://github.com/blacklabelops-legacy/nginx)
 
 Prerequisite:
 

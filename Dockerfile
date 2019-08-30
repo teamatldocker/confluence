@@ -5,8 +5,7 @@ ARG CONFLUENCE_VERSION=6.15.9
 # permissions
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
-# Image Build Date By Buildsystem
-ARG BUILD_DATE=undefined
+
 # Language Settings
 ARG LANG_LANGUAGE=en
 ARG LANG_COUNTRY=US
@@ -104,3 +103,6 @@ WORKDIR ${CONF_HOME}
 COPY docker-entrypoint.sh /home/confluence/docker-entrypoint.sh
 ENTRYPOINT ["/sbin/tini","--","/home/confluence/docker-entrypoint.sh"]
 CMD ["confluence"]
+
+# Image Build Date By Buildsystem
+ARG BUILD_DATE=undefined

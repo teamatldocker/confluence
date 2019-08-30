@@ -334,7 +334,7 @@ $ docker run -d \
     -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
     -e "SERVER1REVERSE_PROXY_PASS1=http://confluence:8090" \
     -e "SERVER1REVERSE_PROXY_APPLICATION1=confluence" \
-    blacklabelops/nginx
+    blacklabelops-legacy/nginx
 ~~~~
 
 > Confluence will be available at http://confluence.yourhost.com.
@@ -383,7 +383,7 @@ $ docker run -d \
     -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=confluence.yourhost.com/L=Springfield/C=US" \
     -e "SERVER1HTTPS_ENABLED=true" \
     -e "SERVER1HTTP_ENABLED=false" \
-    blacklabelops/nginx
+    blacklabelops-legacy/nginx
 ~~~~
 
 > Confluence will be available at https://confluence.yourhost.com.

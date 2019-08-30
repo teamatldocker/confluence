@@ -43,7 +43,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_ENCODING=UTF8' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
-    blacklabelops/postgres
+    postgres
 ~~~~
 
 > This is the blacklabelops postgres image.
@@ -227,10 +227,10 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
     -e 'POSTGRES_DB=jiradb' \
-    -e 'POSTGRES_ENCODING=UNICODE' \
+    -e 'POSTGRES_ENCODING=UTF8' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
-    blacklabelops/postgres
+    postgres
 ~~~~
 
 > Confluence will start after postgres is available!

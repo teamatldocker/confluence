@@ -576,4 +576,3 @@ This project is very grateful for code and examples from the repositories:
 * [Docker Homepage](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/)
 * [Docker Userguide](https://docs.docker.com/userguide/)
-* [Oracle Java](https://java.com/de/download/)

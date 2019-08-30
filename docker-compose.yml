@@ -18,9 +18,6 @@ services:
       - 'CONFLUENCE_PROXY_PORT='
       - 'CONFLUENCE_PROXY_SCHEME='
       - 'CONFLUENCE_DELAYED_START='
-    labels:
-      com.blacklabelops.description: "Atlassian Confluence"
-      com.blacklabelops.service: "confluence"
 
   postgresql:
     image: postgres:9.5-alpine
@@ -38,9 +35,6 @@ services:
       - 'POSTGRES_ENCODING=UTF8'
       - 'POSTGRES_COLLATE=C'
       - 'POSTGRES_COLLATE_TYPE=C'
-    labels:
-      com.blacklabelops.description: "PostgreSQL Database Server"
-      com.blacklabelops.service: "postgresql"
 
 volumes:
   confluencedata:

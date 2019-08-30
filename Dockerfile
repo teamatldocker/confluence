@@ -100,15 +100,6 @@ RUN export CONTAINER_USER=confluence                &&  \
     rm -rf /tmp/*                                   &&  \
     rm -rf /var/log/*
 
-# Image Metadata
-LABEL com.blacklabelops.application.confluence.version=$CONFLUENCE_VERSION \
-      com.blacklabelops.application.confluence.setting.language=$LANG_LANGUAGE \
-      com.blacklabelops.application.confluence.setting.country=$LANG_COUNTRY \
-      com.blacklabelops.application.confluence.userid=$CONTAINER_UID \
-      com.blacklabelops.application.confluence.groupid=$CONTAINER_GID \
-      com.blacklabelops.application.version.jdbc-mysql=$MYSQL_DRIVER_VERSION \
-      com.blacklabelops.image.builddate.confluence=${BUILD_DATE}
-
 # Expose default HTTP connector port.
 EXPOSE 8090 8091
 
@@ -123,3 +114,13 @@ CMD ["confluence"]
 
 # Image Build Date By Buildsystem
 ARG BUILD_DATE=undefined
+
+# Image Metadata
+LABEL maintainer="Jonathan Hult <teamatldocker@JonathanHult.com>"                                  \
+    org.opencontainers.image.authors="Jonathan Hult <teamatldocker@JonathanHult.com>"              \
+    org.opencontainers.image.url="https://hub.docker.com/r/teamatldocker/confluence/"              \
+    org.opencontainers.image.title=Confluence                                                      \
+    org.opencontainers.image.description="Confluence $CONFLUENCE_VERSION running on Alpine Linux"  \
+    org.opencontainers.image.source="https://github.com/teamatldocker/confluence/"                 \
+    org.opencontainers.image.created=$BUILD_DATE                                                   \
+    org.opencontainers.image.version=$CONFLUENCE_VERSION

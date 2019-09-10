@@ -6,7 +6,7 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 7.0.0 | 7.0.0, latest | [Dockerfile](https://github.com/teamatldocker/confluence/blob/master/Dockerfile) |
+| Confluence | 7.0.1 | 7.0.1, latest | [Dockerfile](https://github.com/teamatldocker/confluence/blob/master/Dockerfile) |
 
 # Related Images
 
@@ -301,7 +301,7 @@ Prerequisite:
 If you want to try the stack on your local compute then setup the following domains in your host settings (Mac/Linux: /etc/hosts):
 
 ~~~~
-127.0.0.1	confluence.yourhost.com
+127.0.1.1	confluence.yourhost.com
 ~~~~
 
 Then create a Docker network for communication between Confluence and Nginx:
@@ -350,7 +350,7 @@ Prerequisite:
 If you want to try the stack on your local compute then setup the following domains in your host settings (Mac/Linux: /etc/hosts):
 
 ~~~~
-127.0.0.1	confluence.yourhost.com
+127.0.1.1	confluence.yourhost.com
 ~~~~
 
 Then create a Docker network for communication between Confluence and Nginx:

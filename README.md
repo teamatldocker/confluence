@@ -6,7 +6,7 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 6.15.9 | 6.15.9, latest | [Dockerfile](https://github.com/teamatldocker/confluence/blob/master/Dockerfile) |
+| Confluence | 7.0.0 | 7.0.0, latest | [Dockerfile](https://github.com/teamatldocker/confluence/blob/master/Dockerfile) |
 
 # Related Images
 

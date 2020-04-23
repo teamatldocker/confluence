@@ -1,7 +1,7 @@
 FROM adoptopenjdk/openjdk8:alpine-jre
 # this image already contains glibc
 
-ARG CONFLUENCE_VERSION=7.3.5
+ARG CONFLUENCE_VERSION=7.4.0
 
 # permissions
 ARG CONTAINER_UID=1000
@@ -93,7 +93,7 @@ RUN export CONTAINER_USER=confluence                &&  \
     keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias letsencryptauthorityx3 -file /tmp/lets-encrypt-x3-cross-signed.der && \
     keytool -trustcacerts -keystore $KEYSTORE -storepass changeit -noprompt -importcert -alias letsencryptauthorityx4 -file /tmp/lets-encrypt-x4-cross-signed.der && \
     # Install atlassian ssl tool
-    wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class && \
+    wget -O /home/${CONTAINER_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/77.4.0358/77.4.0357/1/1441897666313/SSLPoke.class && \
     chown -R confluence:confluence /home/${CONTAINER_USER} && \
     # Clean caches and tmps
     rm -rf /var/cache/apk/*                         &&  \

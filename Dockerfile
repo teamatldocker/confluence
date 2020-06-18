@@ -30,6 +30,9 @@ RUN export CONTAINER_USER=confluence                &&  \
     && export GLIBC_DOWNLOAD_URL=https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION \
     && export GLIBC_BIN=glibc-bin-$GLIBC_VERSION.apk           \
     && export GLIBC_I18N=glibc-i18n-$GLIBC_VERSION.apk         \
+    && apk add --update --no-cache --upgrade                   \
+        ssl_client                                             \
+        ca-certificates-bundle                                 \
     && wget -O $GLIBC_BIN $GLIBC_DOWNLOAD_URL/$GLIBC_BIN       \
     && wget -O $GLIBC_I18N $GLIBC_DOWNLOAD_URL/$GLIBC_I18N     \
     && apk add --update --no-cache                    \

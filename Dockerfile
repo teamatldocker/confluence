@@ -32,7 +32,7 @@ RUN export CONTAINER_USER=confluence                        && \
     && export GLIBC_I18N=glibc-i18n-$GLIBC_VERSION.apk         \
     && apk add --update --no-cache --upgrade                   \
         ssl_client                                             \
-        ca-certificates-bundle                                 \
+        ca-certificates                                        \
     && wget -O $GLIBC_BIN $GLIBC_DOWNLOAD_URL/$GLIBC_BIN       \
     && wget -O $GLIBC_I18N $GLIBC_DOWNLOAD_URL/$GLIBC_I18N     \
     && apk add --update --no-cache                             \

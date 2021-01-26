@@ -14,7 +14,8 @@ ARG LANG_COUNTRY=US
 # Setup useful environment variables
 ENV CONF_HOME=/var/atlassian/confluence \
     CONF_INSTALL=/opt/atlassian/confluence \
-    MYSQL_DRIVER_VERSION=5.1.47
+    MYSQL_DRIVER_VERSION=5.1.47 \
+    POSTGRESQL_DRIVER_VERSION=42.2.18
 
 # Install Atlassian Confluence
 RUN export CONTAINER_USER=confluence                        && \
@@ -80,6 +81,10 @@ RUN export CONTAINER_USER=confluence                        && \
       -C /tmp                                                                                                   && \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar      \
       ${CONF_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                  && \
+    rm -f                                                                                                          \
+      ${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql-*.jar                                                   && \
+    wget -O ${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                     \
+      https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                          && \
     chown -R confluence:confluence ${CONF_INSTALL}                                                              && \
     # Adding letsencrypt-ca to truststore
     export KEYSTORE=$JAVA_HOME/lib/security/cacerts                                                             && \

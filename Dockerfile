@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8:alpine-jre
+FROM adoptopenjdk/openjdk8:alpine
 # this image already contains glibc
 
 ARG CONFLUENCE_VERSION=7.11.6

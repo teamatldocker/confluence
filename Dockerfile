@@ -83,7 +83,7 @@ RUN export CONTAINER_USER=confluence                        && \
     chown -R confluence:confluence ${CONF_INSTALL}                                                              && \,
     
     # Adding letsencrypt-ca to truststore
-    export KEYSTORE=$JAVA_HOME/lib/security/cacerts                                                             && \
+RUN  export KEYSTORE=$JAVA_HOME/lib/security/cacerts                                                             && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der                                && \

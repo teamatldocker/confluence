@@ -80,10 +80,8 @@ RUN export CONTAINER_USER=confluence                        && \
       -C /tmp                                                                                                   && \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar      \
       ${CONF_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                  && \
-    chown -R confluence:confluence ${CONF_INSTALL}                                                              && \,
-    
-    # Adding letsencrypt-ca to truststore
-RUN  export KEYSTORE=$JAVA_HOME/lib/security/cacerts                                                             && \
+    chown -R confluence:confluence ${CONF_INSTALL}                                                              && \
+    export KEYSTORE=$JAVA_HOME/lib/security/cacerts                                                             && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der                                && \

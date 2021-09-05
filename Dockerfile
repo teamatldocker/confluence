@@ -1,7 +1,7 @@
 FROM adoptopenjdk/openjdk8:alpine
 # this image already contains glibc
 
-ARG CONFLUENCE_VERSION=7.11.6
+ARG CONFLUENCE_VERSION=7.12.5
 
 # permissions
 ARG CONTAINER_UID=1000
@@ -113,16 +113,3 @@ COPY bin/docker-entrypoint.sh /home/confluence/docker-entrypoint.sh
 COPY bin/dockerwait.sh /usr/bin/dockerwait
 ENTRYPOINT ["/sbin/tini","--","/home/confluence/docker-entrypoint.sh"]
 CMD ["confluence"]
-
-# Image Build Date By Buildsystem
-ARG BUILD_DATE=undefined
-
-# Image Metadata
-LABEL maintainer="Jonathan Hult <teamatldocker@JonathanHult.com>"                                  \
-    org.opencontainers.image.authors="Jonathan Hult <teamatldocker@JonathanHult.com>"              \
-    org.opencontainers.image.url="https://hub.docker.com/r/teamatldocker/confluence/"              \
-    org.opencontainers.image.title=Confluence                                                      \
-    org.opencontainers.image.description="Confluence $CONFLUENCE_VERSION running on Alpine Linux"  \
-    org.opencontainers.image.source="https://github.com/teamatldocker/confluence/"                 \
-    org.opencontainers.image.created=$BUILD_DATE                                                   \
-    org.opencontainers.image.version=$CONFLUENCE_VERSION

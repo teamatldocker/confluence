@@ -1,7 +1,7 @@
-FROM adoptopenjdk/openjdk8:alpine-jre
+FROM adoptopenjdk/openjdk8:alpine
 # this image already contains glibc
 
-ARG CONFLUENCE_VERSION=7.11.0
+ARG CONFLUENCE_VERSION=7.12.5
 
 # permissions
 ARG CONTAINER_UID=1000
@@ -26,7 +26,7 @@ RUN export CONTAINER_USER=confluence                        && \
             -s /bin/bash                                       \
             -S $CONTAINER_USER                                 \
     # glibc and pub key already installed by parent image; we need to install latest bin and i18n \
-    && export GLIBC_VERSION=2.29-r0                            \
+    && export GLIBC_VERSION=2.32-r0                            \
     && export GLIBC_DOWNLOAD_URL=https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION \
     && export GLIBC_BIN=glibc-bin-$GLIBC_VERSION.apk           \
     && export GLIBC_I18N=glibc-i18n-$GLIBC_VERSION.apk         \
@@ -81,8 +81,7 @@ RUN export CONTAINER_USER=confluence                        && \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar      \
       ${CONF_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                  && \
     chown -R confluence:confluence ${CONF_INSTALL}                                                              && \
-    # Adding letsencrypt-ca to truststore
-    export KEYSTORE=$JAVA_HOME/lib/security/cacerts                                                             && \
+    export KEYSTORE=$JAVA_HOME/jre/lib/security/cacerts                                                             && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der                                && \
@@ -114,16 +113,3 @@ COPY bin/docker-entrypoint.sh /home/confluence/docker-entrypoint.sh
 COPY bin/dockerwait.sh /usr/bin/dockerwait
 ENTRYPOINT ["/sbin/tini","--","/home/confluence/docker-entrypoint.sh"]
 CMD ["confluence"]
-
-# Image Build Date By Buildsystem
-ARG BUILD_DATE=undefined
-
-# Image Metadata
-LABEL maintainer="Jonathan Hult <teamatldocker@JonathanHult.com>"                                  \
-    org.opencontainers.image.authors="Jonathan Hult <teamatldocker@JonathanHult.com>"              \
-    org.opencontainers.image.url="https://hub.docker.com/r/teamatldocker/confluence/"              \
-    org.opencontainers.image.title=Confluence                                                      \
-    org.opencontainers.image.description="Confluence $CONFLUENCE_VERSION running on Alpine Linux"  \
-    org.opencontainers.image.source="https://github.com/teamatldocker/confluence/"                 \
-    org.opencontainers.image.created=$BUILD_DATE                                                   \
-    org.opencontainers.image.version=$CONFLUENCE_VERSION

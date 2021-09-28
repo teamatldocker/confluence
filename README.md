@@ -38,15 +38,14 @@ First start the database server:
 $ docker network create confluencenet
 $ docker run --name postgres -d \
     --network confluencenet \
-    -e 'POSTGRES_USER=jira' \
-    -e 'POSTGRES_PASSWORD=jellyfish' \
-    -e 'POSTGRES_ENCODING=UTF8' \
-    -e 'POSTGRES_COLLATE=C' \
-    -e 'POSTGRES_COLLATE_TYPE=C' \
-    postgres
+    -e 'POSTGRES_USER=confluencedb' \
+    -e 'POSTGRES_PASSWORD=confluence \
+    -e 'POSTGRES_DB=confluencedb' \
+    postgres:10
 ~~~~
 
-> This is the blacklabelops postgres image.
+> (!) Make sure to use database version supported with Confluence version - 
+>https://confluence.atlassian.com/doc/supported-platforms-207488198.html
 
 Secondly start Confluence with a link to postgres:
 
@@ -97,7 +96,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_DB=confluencedb' \
     -e 'POSTGRES_USER=confluencedb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.4
+    postgres:10
 ~~~~
 
 > This is the official postgres image.

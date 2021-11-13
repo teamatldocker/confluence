@@ -6,7 +6,7 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Confluence | 7.11.6 | 7.11.6, latest | [Dockerfile](https://github.com/teamatldocker/confluence/blob/master/Dockerfile) |
+| Confluence | 7.14.1 | 7.14.1, latest | [Dockerfile](https://github.com/teamatldocker/confluence/blob/master/Dockerfile) |
 
 # Related Images
 
@@ -97,7 +97,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_DB=confluencedb' \
     -e 'POSTGRES_USER=confluencedb' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.4
+    postgres:10-alpine
 ~~~~
 
 > This is the official postgres image.
@@ -111,7 +111,7 @@ $ docker run --name postgres -d \
     -e 'DB_USER=confluencedb' \
     -e 'DB_PASS=jellyfish' \
     -e 'DB_NAME=confluencedb' \
-    sameersbn/postgresql:9.4-12
+    sameersbn/postgresql:10-alpine
 ~~~~
 
 > This is the sameersbn/postgresql docker container I tested.
@@ -151,7 +151,7 @@ $ docker run -d --name mysql \
     -e 'MYSQL_DATABASE=confluencedb' \
     -e 'MYSQL_USER=confluencedb' \
     -e 'MYSQL_PASSWORD=jellyfish' \
-    mysql:5.6
+    mysql:5.7
 ~~~~
 
 > This is the mysql docker container I tested.
@@ -165,7 +165,7 @@ $ docker run -d --name mysql \
     -e 'ON_CREATE_DB=confluencedb' \
     -e 'MYSQL_USER=confluencedb' \
     -e 'MYSQL_PASS=jellyfish' \
-    tutum/mysql:5.6
+    tutum/mysql:5.7
 ~~~~
 
 > This is the tutum/mysql docker container I tested.
@@ -230,7 +230,7 @@ $ docker run --name postgres -d \
     -e 'POSTGRES_ENCODING=UTF8' \
     -e 'POSTGRES_COLLATE=C' \
     -e 'POSTGRES_COLLATE_TYPE=C' \
-    postgres
+    postgres:10-alpine
 ~~~~
 
 > Confluence will start after postgres is available!

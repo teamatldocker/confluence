@@ -1,7 +1,7 @@
-FROM adoptopenjdk/openjdk8:alpine
+FROM adoptopenjdk/openjdk8:alpine-jre
 # this image already contains glibc
 
-ARG CONFLUENCE_VERSION=7.12.5
+ARG CONFLUENCE_VERSION=7.14.1
 
 # permissions
 ARG CONTAINER_UID=1000
@@ -81,7 +81,7 @@ RUN export CONTAINER_USER=confluence                        && \
     cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar      \
       ${CONF_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                  && \
     chown -R confluence:confluence ${CONF_INSTALL}                                                              && \
-    export KEYSTORE=$JAVA_HOME/jre/lib/security/cacerts                                                             && \
+    export KEYSTORE=$JAVA_HOME/lib/security/cacerts                                                             && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der                                      && \
     wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der                                && \
